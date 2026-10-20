@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="tr" class="ld">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<script>/* V57 - landscape phone lays out 1920 wide like the PC, portrait stays 1440 */(function(){var m=document.querySelector('meta[name=viewport]'),q=matchMedia('(orientation:landscape)');function f(){m.setAttribute('content','width='+(q.matches?1920:1440))}f();q.addEventListener?q.addEventListener('change',f):q.addListener(f)})();</script>
+<title>Bağlama Atölyesi</title>
+<link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
+<link rel="icon" href="favicon.ico?v=2" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#d81e1e; --blue:#1239c8; --green:#1f8a3b;
+    --ink:#0b1440; --muted:#6b7280; --soft:#8f96a7; --line:#e3e6ec; --fill:#f7f8f9; --tint:#eef2fd; --bg:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0} html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:"Segoe UI",Inter,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:14.5pt;line-height:1.45;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+  button{font:inherit;color:inherit}
+  .wrap{max-width:1680px;margin:0 auto;padding:0 24px}
+
+  /* top bar */
+  .top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .top .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;height:76px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand img{width:56px;height:56px;display:block}
+  .brand b{font-family:"Montserrat",Arial,sans-serif;font-weight:900;font-size:19pt;letter-spacing:.5px;line-height:1;white-space:nowrap}
+  .brand b .r{color:var(--red)} .brand b .bl{color:var(--blue)}
+  .tabs{display:flex;justify-content:center;gap:8px;height:100%}
+  .tabs button{border:0;background:none;padding:0 16px;font-size:12pt;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tabs button:hover{color:var(--ink)}
+  .tabs button.on{color:var(--blue);border-bottom-color:var(--blue)}
+  .top .grp{width:56px;height:56px;display:block}
+
+  /* main */
+  main{display:grid;grid-template-columns:400px minmax(0,1fr);gap:24px;padding:24px 0;align-items:start}
+  .screen{aspect-ratio:16/9;border-radius:3px;overflow:hidden;background:linear-gradient(135deg,#eef2fd 0%,#f7f8fa 55%,#fdf0f0 100%);border:1px solid var(--line)}
+  .screen iframe{width:100%;height:100%;border:0;display:block;background:#000}
+  .screen video{width:100%;height:100%;display:block;background:#000;object-fit:contain}
+  .screen .plyr{height:100%;--plyr-color-main:var(--blue)}
+  .screen .plyr video{object-fit:contain}
+  .speed{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px;padding-top:8px}
+  .speed[hidden]{display:none}
+  .speed span{font-size:10.5pt;font-weight:600;color:var(--muted)}
+  .speed button{border:1px solid var(--line);background:#fff;border-radius:3px;padding:4px 12px;font-size:11pt;font-weight:600;cursor:pointer}
+  .speed button:hover{border-color:var(--blue);color:var(--blue)}
+  .speed button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .ctl{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px}   /* V28 - Başa+Oynat capsule left, Hız capsule right */
+  .idle{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px}
+  .idle img{width:150px;height:150px}
+  .go{max-width:100%;display:inline-flex;align-items:center;gap:12px;border:0;border-radius:3px;background:var(--red);color:#fff;font-weight:600;font-size:13pt;padding:12px 24px;cursor:pointer}
+  .go:hover{background:#b91818}
+  .go{font-weight:400;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:linear-gradient(120deg,#0245fb,#1747fc);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 4px 12px rgba(2,69,251,.32);-webkit-font-smoothing:antialiased}
+  .go:hover{background:linear-gradient(120deg,#0139d6,#0f3be6)}
+  .idle small{font-size:10.5pt;color:var(--muted)}
+  /* V15 - start caption: hairline-framed, tracked small caps, not a button */
+  .idle small{display:inline-flex;align-items:center;gap:14px;font-size:8.5pt;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#6b7280;-webkit-font-smoothing:antialiased}
+  .idle small::before,.idle small::after{content:"";width:56px;height:1px}
+  .idle small::before{background:linear-gradient(90deg,rgba(160,186,250,0),#a0bafa)}
+  .idle small::after{background:linear-gradient(90deg,#a0bafa,rgba(160,186,250,0))}
+
+  .info{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .info .txt{flex:1;min-width:0}
+  .chips{display:flex;gap:8px;margin-bottom:8px}
+  .chip{font-size:10.5pt;font-weight:600;padding:2px 8px;border-radius:2px;border:1px solid}
+  .chip.g{color:var(--blue);border-color:#b9c6f3;background:var(--tint)}
+  .chip.l{color:var(--red);border-color:#f2c0c0;background:#fdf1f1}
+  .info h2{margin:0;font-size:18pt;font-weight:600;line-height:1.3}
+  .info .sub{font-size:10.5pt;color:var(--muted);margin-top:4px}
+  .nav{display:flex;gap:8px;flex:none}
+  .nav button{border:1px solid var(--line);background:#fff;border-radius:3px;padding:8px 16px;font-size:11pt;font-weight:600;cursor:pointer}
+  .nav button:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+  .nav button:disabled{opacity:.4;cursor:default}
+
+  /* notes */
+  .notes{margin-top:24px;border:1px solid var(--line);border-radius:3px;background:#fff}
+  .notes .nh{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:16px 24px;border-bottom:1px solid var(--line);background:var(--fill)}
+  .notes .nh b{font-size:18pt}
+  .notes .nh span{font-size:10.5pt;color:var(--muted)}
+  .sheet{min-height:calc(100vh - 140px);display:flex;align-items:center;justify-content:center;padding:24px}
+  .sheet img{width:100%;height:auto;display:block}
+  .sheet:has(img.nota){display:flex;align-items:stretch;gap:16px;overflow:hidden}
+  .grp-view{flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
+  .sheet .grp-view img.nota{width:auto;max-width:100%;max-height:100%;margin:0 auto;object-fit:contain}
+  .grp-nav{flex:none;display:flex;flex-direction:column;justify-content:flex-start;gap:4px;padding:3px;align-self:center;max-height:100%;overflow-y:auto;scrollbar-width:none;background:rgba(255,255,255,.6);border:1px solid #d3dbe8;border-radius:10px}
+  .grp-nav button{width:32px;height:26px;font:400 10pt Inter,sans-serif;color:#6b7280;background:none;border:1px solid transparent;border-radius:8px;cursor:pointer}
+  .grp-nav button:hover{color:#0141ee}
+  .grp-nav button.on{background:#fff;border-color:#a0bafa;color:#0141ee;box-shadow:0 2px 6px rgba(2,69,251,.14)}
+  .sheet img.nota[hidden]{display:none}
+  .grp-nav button:focus:not(:focus-visible){outline:none}   /* V25 - one note group at a time, letters switch */
+  .sheet .ph{text-align:center;color:var(--muted);font-size:13pt;border:1px dashed var(--line);border-radius:3px;width:100%;align-self:stretch;display:flex;align-items:flex-start;justify-content:center;padding-top:96px}
+
+  /* lesson list */
+  .cur{border:1px solid var(--line);border-radius:3px;position:sticky;top:100px;max-height:calc(100vh - 124px);display:flex;flex-direction:column;background:#fff}
+  .cur .head{padding:16px;border-bottom:1px solid var(--line)}
+  .cur .t{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+  .cur .t b{font-size:18pt}
+  .cur .t span{font-size:10.5pt;color:var(--muted)}
+  .search{width:100%;font:inherit;font-size:12pt;border:1px solid var(--line);border-radius:3px;padding:8px 12px;background:var(--fill);outline:none}
+  .search:focus{border-color:var(--blue);background:#fff}
+  .mods{overflow:auto}
+  .mod{border-bottom:1px solid var(--line)}
+  .mod:last-child{border-bottom:0}
+  .mod > button{width:100%;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;border:0;background:#fff;padding:12px 16px;cursor:pointer;text-align:left}
+  .mod > button:hover{background:var(--fill)}
+  .mod .k{font-weight:600;font-size:14.5pt}
+  .mod .ch{font-size:9pt;color:var(--muted);transition:transform .15s}
+  .mod.open .ch{transform:rotate(180deg)}
+  .mod .p{grid-column:1/-1;display:flex;align-items:center;gap:12px;font-size:10.5pt;color:var(--muted)}
+  .bar{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--green)}
+  .mod ol{list-style:none;margin:0;padding:0 0 8px;display:none}
+  .mod.open ol{display:block}
+  .row{width:100%;display:grid;grid-template-columns:32px 1fr auto;gap:8px;align-items:center;border:0;background:none;padding:8px 16px;text-align:left;font-size:12.5pt;border-left:4px solid transparent}
+  button.row{cursor:pointer}
+  button.row:hover{background:var(--fill)}
+  button.row.on{background:var(--tint);border-left-color:var(--red);font-weight:600}
+  .row .n{font-size:10.5pt;color:var(--muted);text-align:right}
+  .row .s{font-size:10.5pt;color:var(--blue)}
+  .row.off{color:var(--muted)}
+  .ek{display:flex;align-items:center;gap:8px;padding:10px 16px 4px;font-size:9.5pt;color:var(--muted)}
+  .ek::after{content:'';flex:1;border-top:1.5px solid #c9cfda}
+  .row.x{cursor:default}
+  .row.off .s{color:#a3a9ae}
+  .empty{padding:16px;color:var(--muted);font-size:12pt}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);margin-top:8px}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:16px;padding-bottom:16px}
+  .q{display:inline-flex;align-items:center;gap:12px;border:0;background:none;font-size:13pt;font-weight:600;color:var(--blue);cursor:pointer;text-align:left;padding:0}
+  .q i{font-style:normal;font-size:9pt;width:28px;height:28px;flex:none;border-radius:50%;border:1px solid #b9c6f3;display:inline-flex;align-items:center;justify-content:center}
+  .q:hover{text-decoration:underline}
+  .credit{font-size:10.5pt;color:var(--muted);white-space:nowrap}
+  .q{font-weight:400;color:var(--ink)}
+  .q:hover{text-decoration:none}
+  .q i{border:0;border-radius:9px;color:#fff;font-size:9pt;background:linear-gradient(135deg,#f05252,#c81e1e);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 3px 8px rgba(200,30,30,.35)}
+  .row.off .s svg{width:15px;height:15px;fill:none;stroke:#a3a9b8;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+  .q:hover i{background:linear-gradient(135deg,#e53e3e,#a91616)}
+  .q .qt{font-style:italic;font-size:12pt;color:#2a3352}
+  .q .qk{display:inline-flex;gap:6px;margin-left:4px}
+  .q .qk em{font-style:normal;font-size:9.5pt;font-weight:600;color:#0141ee;border:1px solid #a0bafa;background:#eff5fe;border-radius:6px;padding:0 8px;line-height:20px}
+
+  /* book switch (desktop only) */
+  .seg{display:none}
+  .lg{display:none}
+
+  /* one screen (desktop): list, video and notes all in view; page does not scroll */
+  @media (min-width:981px){
+    body{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+    .wrap{max-width:none}
+    .top .wrap{height:56px}
+    .brand img,.top .grp{width:42px;height:42px}
+    body > .wrap{flex:1;min-height:0;width:100%}
+    main{height:100%;grid-template-columns:420px minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:16px;padding:16px 0}
+
+    /* left card: now playing, search, book switch, list - no inner lines */
+    /* row 1: Uzun/Kısa Sap + search | row 2: now playing + prev/next | row 3: books | row 4: list */
+    .cur{position:static;height:100%;max-height:none;overflow:hidden;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto auto minmax(0,1fr);column-gap:8px}
+    .cur .side,.side .info,.cur .head{display:contents}
+    .cur .head .t{display:none}
+    .seg{display:flex;background:var(--fill);border-radius:3px;padding:3px}
+    .top .tabs,.top .grp,.brand img{display:none}
+    .top .wrap{display:grid;grid-template-columns:420px minmax(0,1fr);gap:16px;height:64px}
+    .brand{grid-column:2;justify-self:center}
+    .brand b{font-size:25pt;letter-spacing:1px}
+    .brand b .r{text-shadow:0 1px 0 #b51818,0 2px 0 #9c1414,0 3px 0 #831010,0 6px 10px rgba(11,20,64,.16)}
+    .brand b .bl{text-shadow:0 1px 0 #0f30a8,0 2px 0 #0c2890,0 3px 0 #0a2078,0 6px 10px rgba(11,20,64,.16)}
+    .stage{position:relative}
+    .lg{display:block;position:absolute;top:0;width:var(--lw,150px);height:var(--lw,150px);transform:translateX(-50%)}
+    .lg.l{left:var(--gl,0)} .lg.r{left:var(--gr,100%)}
+    /* V18 - the song's lyrics under the right logo, list font */
+    .lyr{position:absolute;left:var(--gr,100%);top:calc(var(--lw,150px) + 14px);bottom:12px;width:calc(var(--gw,260px) - 28px);transform:translateX(-50%);overflow:hidden;text-align:left;font-size:10.5pt;font-weight:400;line-height:1.65;color:#1f2740;letter-spacing:.1px;-webkit-font-smoothing:antialiased}
+    .lyr[hidden]{display:none}
+    .lyr p{margin:0 0 .9em;break-inside:avoid}
+    .lyr.two{columns:2;column-gap:14px;text-align:left}
+    .lyr span{display:block;padding:0 6px;border-radius:6px;transition:color .25s,background .25s}
+    /* V18b - one column, whole lines, tighter leading so a full song fits at a readable size */
+    .lyr{line-height:1.38;white-space:nowrap} .lyr p{margin-bottom:.55em} .lyr.two{white-space:normal}
+    /* V18d - right column: one rounded frame, top to bottom, holding the group logo and the lyrics */
+    .lbox{position:absolute;top:12px;bottom:12px;left:var(--gr,100%);width:calc(var(--gw,260px) - 24px);transform:translateX(-50%);border:1px solid #e3e7ef;border-radius:10px;background:linear-gradient(135deg,#eef2fd 0%,#f7f8fa 55%,#fdf0f0 100%)}
+    .lg.r{top:24px;width:min(var(--lw,150px),calc(var(--gw,260px) - 48px));height:min(var(--lw,150px),calc(var(--gw,260px) - 48px))}
+    .lyr{top:calc(36px + min(var(--lw,150px),calc(var(--gw,260px) - 48px)));bottom:24px;width:calc(var(--gw,260px) - 48px)}
+    .stage.narrow .lbox,.stage.narrow .lyr{display:none}
+    /* V43 - the lyric block sits centred under the logo, its lines left-aligned inside it */
+    .lyr{width:fit-content;max-width:calc(var(--gw,260px) - 48px)} .lyr.two{width:calc(var(--gw,260px) - 48px)}
+    /* V62 - the lyric block centred in the frame by its widest stanza, lines left-aligned; a lone closing line centred */
+    .lyr{width:calc(var(--gw,260px) - 48px)} .lyr p.cr{text-align:center}
+    /* V23 - left logo framed like the right one */
+    .lbox.l{left:var(--gl,0)}
+    /* V26 - perde haritasi: the sap in the left frame, the perdes of the shown group lit */
+    .sap{position:absolute;left:var(--gl,0);top:12px;bottom:12px;width:calc(var(--gw,260px) - 24px);transform:translateX(-50%);overflow:hidden;border-radius:10px;pointer-events:none}
+    .sap[hidden],.stage.narrow .sap{display:none}
+    .sap svg{display:block;width:100%;height:100%}
+    .lg.l{top:24px;width:min(var(--lw,150px),calc(var(--gw,260px) - 48px));height:min(var(--lw,150px),calc(var(--gw,260px) - 48px))}
+    .lyr.sync span{color:#9aa1b2}
+    .lyr.sync span.on{color:#0141ee;background:#eff5fe}
+    /* V81 - SAZMETRI V0073: a "Bağlantı..." line is blue #1A54C8, regular weight, as on the page */
+    .lyr span.bag{color:#1A54C8;font-weight:400}
+    .side .gs{grid-row:1;grid-column:1;width:176px;margin:12px 0 0 16px}
+    .cur .head .search{grid-row:1;grid-column:2/4;width:auto;margin:12px 16px 0 0}
+    .search{font-size:11pt;padding:7px 12px}
+    .side .txt{grid-row:2;grid-column:1/3;align-self:center;margin:8px 0 0 16px;line-height:1.35}
+    .side .txt h2{font-size:12pt;line-height:1.3}
+    .side .txt h2.pick{display:none}
+    .side .txt .sub{margin:0}
+    .side .nav{grid-row:2;grid-column:3;align-self:center;margin:8px 16px 0 0}
+    .side .nav button{padding:3px 12px;font-size:10.5pt;font-weight:400;white-space:nowrap}
+    .side .txt .gn{display:none}
+    #seg{grid-row:3;grid-column:1/-1;margin:4px 16px 4px}
+    .mods{grid-row:4;grid-column:1/-1}
+    .seg button{flex:1;display:flex;align-items:baseline;justify-content:center;gap:8px;border:1px solid transparent;background:none;border-radius:2px;padding:4px 0;font-size:11pt;color:var(--muted);cursor:pointer}
+    .seg button em{font-style:normal;font-size:9.5pt;color:var(--soft)}
+    .seg button:hover{color:var(--ink)}
+    .seg button.on{background:#fff;border-color:var(--line);color:var(--blue);font-weight:600}
+    .seg button.on em{font-weight:400}
+    .mods{flex:1;min-height:0;padding:0 8px 4px}
+    .mod{border:0}
+    .mod > button{display:none}
+    .mods.q .mod > button{display:block;padding:8px 8px 2px;background:none;cursor:default}
+    .mods.q .mod .k{font-size:10.5pt;color:var(--muted)}
+    .mods.q .mod .ch,.mods.q .mod .p{display:none}
+    .mod ol{padding:0}
+    .row{min-height:20px;line-height:20px;padding:0 8px;font-size:11.5pt;grid-template-columns:22px 1fr auto;gap:8px;border-left:0;border-radius:3px}
+    .row .n{font-size:10.5pt;color:var(--soft);font-variant-numeric:tabular-nums}
+    .row{font-weight:400;color:var(--ink)}
+    .row .s{font-size:8pt;color:#7d95e0}
+    .row.off,.row.off .s{color:var(--soft)}  .row.off .s{font-size:9.5pt}
+    button.row.on{background:var(--tint);color:var(--blue);font-weight:600}
+    button.row.on .n{color:var(--blue)}
+
+    /* right: video on top (no side bars), speed under it, notes fill the rest */
+    main > section{height:100%;min-height:0;display:flex;flex-direction:column;gap:16px}
+    .stage{flex:0 0 60%;min-height:0;display:flex;flex-direction:column;align-items:center}
+    .stage .screen{flex:1;min-height:0;aspect-ratio:16/9;max-width:100%;background:#000}
+    .stage .screen:has(.idle){background:linear-gradient(135deg,#eef2fd 0%,#f7f8fa 55%,#fdf0f0 100%)}
+    .stage .speed{align-self:flex-end;padding-top:8px;gap:4px}
+    .speed span{font-weight:400}
+    .speed button{padding:2px 8px;font-size:10pt;font-weight:400}
+    .idle img{width:110px;height:110px}
+    .notes{margin-top:0;flex:1;min-height:0;display:flex;flex-direction:column}
+    .notes .nh{padding:12px 16px 0;border:0;background:none}
+    .notes .nh b{font-size:13.5pt}
+    .sheet{flex:1;min-height:0;overflow:auto;padding:8px 16px 16px}
+    .sheet .ph{padding-top:0;align-items:center;border:0;color:var(--soft);font-size:11.5pt}
+    footer{margin-top:0}
+    /* Meet Pilot look: soft page, rounded white cards, tinted card heads, lined list box */
+    body{background:#f4f7fc}
+    .top{background:#fff;border-bottom-color:#e8ebf1}
+    footer{background:#fff;border-top-color:#e8ebf1}
+    .cur,.notes,.stage{background:#fff;border:1px solid #e8ebf1;border-radius:14px;box-shadow:0 1px 2px rgba(11,20,64,.04),0 1px 3px rgba(11,20,64,.06)}
+    .stage{padding:12px}
+    .stage .screen{border-radius:10px;border:0}
+    .stage .speed{align-self:center;width:var(--sw,100%);max-width:100%;justify-content:flex-end}
+    .cur::before{content:"";grid-row:1;grid-column:1/-1;background:#f6f8fc;border-bottom:1px solid #e8ebf1;border-radius:14px 14px 0 0}
+    .side .gs,.cur .head .search{margin-top:8px;margin-bottom:8px}
+    .seg{background:#eef1f7;border-radius:10px;padding:3px}
+    .seg button{border-radius:8px;color:#6b7280}
+    .seg button.on{background:#fff;border-color:#e3e7ef;color:#0141ee;box-shadow:0 1px 2px rgba(11,20,64,.06)}
+    .seg button em{color:#8f96a7}
+    .search{border:1px solid #d9dee8;border-radius:10px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238f96a7' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='M11 11l3.5 3.5'/%3E%3C/svg%3E") no-repeat 12px 50%;padding-left:36px;color:#0b1440}
+    .search:focus{outline:0;border-color:#a0bafa;box-shadow:0 0 0 3px #eff5fe}
+    .side .txt h2{font-weight:600;color:#0b1440}
+    .side .txt .sub{color:#6b7280}
+    .side .nav button{border:1px solid #c1d1f3;border-radius:10px;background:#fff;color:#0141ee;font-weight:600}
+    .side .nav button:hover:not(:disabled){background:#eff5fe;border-color:#a0bafa}
+    .side .nav button:disabled{color:#b4bac6;border-color:#e8ebf1}
+    .mods{margin:0 16px 12px;padding:0;border:1px solid #e8ebf1;border-radius:10px;display:flex;flex-direction:column;overflow:auto}
+    .mod.open{flex:1;display:flex;flex-direction:column;min-height:0}
+    .mod.open ol{flex:1;display:flex;flex-direction:column}
+    .mods.q .mod.open{flex:none}
+    .mod li{flex:1 1 0;min-height:20px;max-height:36px;display:flex;border-bottom:1px solid #eef0f4}
+    .mod li:last-child{border-bottom:0}
+    .mod li.ek{flex:0 0 auto;min-height:0;display:flex;align-items:center;gap:8px;padding:6px 8px 2px;border-bottom:0;font-size:9pt;color:var(--soft)}
+    .mod li.ek::after{content:'';flex:1;border-top:1.5px solid #c9cfda}
+    .mod li.ek + li{border-top:0}
+    .row{flex:1;min-height:0;height:auto;line-height:1.2;padding:0 12px;border-radius:0;color:#0b1440}
+    button.row:hover{background:#f5f7fb}
+    button.row.on{background:#eff5fe;color:#0b1440;font-weight:400;box-shadow:inset 3px 0 0 #0b5bf5}
+    button.row.on .n{color:#0b5bf5}
+    .row .s{color:#0b5bf5;opacity:.55}
+    .row.off .s{opacity:1}
+    .notes .nh{background:#f6f8fc;border-bottom:1px solid #e8ebf1;border-radius:14px 14px 0 0;padding:12px 16px}
+    .notes .nh b{font-weight:600;color:#0b1440}
+    .speed button{border:1px solid #d9dee8;border-radius:8px;background:#fff;color:#6b7280}
+    .speed button.on{border-color:#a0bafa;background:#eff5fe;color:#0141ee}
+    footer .wrap{padding-top:6px;padding-bottom:6px}
+    /* V9 - colour and depth (Meet Pilot): tinted page in the brand's blue and red, glass cards,
+       the list card a shade darker like Meet Pilot's side panels, darker heads, varied buttons */
+    body{background:radial-gradient(1100px 620px at 0% 0%,#d9e4fb 0%,rgba(217,228,251,0) 62%),radial-gradient(900px 560px at 100% 100%,#f8dede 0%,rgba(248,222,222,0) 58%),linear-gradient(180deg,#eef2f9,#e5eaf3)}
+    .top{margin:8px 24px 0;border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 #fff,0 8px 24px rgba(11,20,64,.07),0 1px 3px rgba(11,20,64,.05)}
+    .top .wrap{padding:0;height:54px}
+    .cur,.notes,.stage{border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.74);backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 #fff,0 8px 24px rgba(11,20,64,.08),0 1px 3px rgba(11,20,64,.06)}
+    .cur{background:rgba(229,235,245,.86)}
+    .cur::before{background:linear-gradient(180deg,#dbe3f0,#d2dbea);border-bottom:1px solid #c9d3e3}
+    .mods{background:#fff;border-color:#d9e0ec;box-shadow:0 1px 2px rgba(11,20,64,.05),0 4px 12px rgba(11,20,64,.05)}
+    .seg{background:rgba(255,255,255,.6);border:1px solid #d3dbe8}
+    .side .gs{background:rgba(255,255,255,.55);border-color:#c3cee0}
+    .side .gs button.on{background:linear-gradient(120deg,#0245fb,#1747fc);border-color:transparent;color:#fff;box-shadow:0 4px 12px rgba(2,69,251,.32)}
+    .side .gs button.on em{color:rgba(255,255,255,.78)}
+    #seg button.on{border-color:#a0bafa;box-shadow:0 2px 6px rgba(2,69,251,.14)}
+    .side .nav #next:not(:disabled){background:linear-gradient(120deg,#0245fb,#1747fc);border-color:transparent;color:#fff;box-shadow:0 4px 12px rgba(2,69,251,.30)}
+    .side .nav #next:hover:not(:disabled){background:linear-gradient(120deg,#0139d6,#0f3be0)}
+    .stage .screen{box-shadow:0 12px 30px rgba(11,20,64,.24),0 2px 6px rgba(11,20,64,.12)}
+    .stage .screen:has(.idle){box-shadow:inset 0 0 0 1px #e3e7ef}
+    .speed span{color:#6b7280}
+    .speed button{background:rgba(255,255,255,.8)}
+    .speed button.on{background:linear-gradient(120deg,#0245fb,#1747fc);border-color:transparent;color:#fff;box-shadow:0 3px 10px rgba(2,69,251,.30)}
+    .notes .nh{display:flex;align-items:center;background:linear-gradient(180deg,#e7ecf5,#dfe6f1);border-bottom-color:#d3dbe8}
+    .notes .nh b{display:inline-flex;align-items:center;gap:10px}
+    .notes .nh b::before{content:"\266A";width:26px;height:26px;flex:none;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-size:13pt;color:#fff;background:linear-gradient(135deg,#a78bfa,#6d28d9);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 3px 8px rgba(109,40,217,.35)}
+    footer{background:none;border:0}
+    footer .wrap{margin:0 24px 8px;padding:4px 16px;border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 #fff,0 8px 24px rgba(11,20,64,.07),0 1px 3px rgba(11,20,64,.05)}
+    main{padding:8px 0}
+    /* V10 - thin, laser-sharp type everywhere (Meet Pilot's "Add Links"): no bold, smaller buttons */
+    main *,footer *{font-weight:400 !important}
+    .seg button{font-size:10.5pt}
+    .seg button em{font-size:9pt}
+    .search{font-size:10.5pt}
+    .side .nav button{font-size:10pt;padding:3px 12px}
+    .side .nav #next:not(:disabled),.side .nav #next:hover:not(:disabled){background:#fff;border-color:#c1d1f3;color:#0141ee;box-shadow:none}
+    .side .nav #next:hover:not(:disabled){background:#eff5fe;border-color:#a0bafa}
+    .side .txt h2{font-size:11.5pt}
+    .notes .nh b{font-size:11.5pt}
+    .speed button{font-size:9.5pt}
+  /* V11 - finer list and button text, like his reference contact list */
+  main,footer{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+  .row{font-size:10.5pt;color:#1f2740;letter-spacing:.1px}
+  .row .n{font-size:8.5pt;color:#a3a9b8;font-variant-numeric:tabular-nums}
+  .row .s{font-size:6.5pt;opacity:.45}
+  .row.off .s{font-size:8pt;color:#a3a9b8;opacity:1}
+  .row.off{color:#9aa1b2}
+  .seg button{font-size:9.5pt}  .seg button em{font-size:8pt}  .search{font-size:9.5pt}
+  .side .nav button{font-size:9pt}  .speed button{font-size:9pt}
+  .side .txt h2{font-size:11pt}  .notes .nh b{font-size:11pt}
+  /* V12 - no-video rows show a crossed camera instead of "yakında" */
+  .row.off .s{display:inline-flex;align-items:center}
+  .row.off .s svg{width:15px;height:15px;fill:none;stroke:#a3a9b8;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  /* V13 - title: tracked caps, crisp, no stacked 3D shadow */
+  .brand b{font-weight:700;font-size:17pt;letter-spacing:.32em;line-height:1;-webkit-font-smoothing:antialiased}
+  .brand b .r,.brand b .bl{text-shadow:0 1px 1px rgba(11,20,64,.12)}
+  .brand b .r{color:#c81e1e}  .brand b .bl{color:#0141ee}
+  /* V19 - narrower desktop: shorter saz so the necks stop short of the title */
+    /* V17 - the left header card holds Uzun/Kısa Sap + search (replaces the wood neck fill) */
+  .top .wrap::before{content:none}
+  .top .tb{grid-column:1;grid-row:1;align-self:stretch;display:flex;align-items:center;gap:8px;padding:0 12px;border:1px solid rgba(255,255,255,.95);border-radius:14px;background:linear-gradient(180deg,#e3e9f4,#d4dcea);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(11,20,64,.06),0 8px 24px rgba(11,20,64,.08),0 1px 3px rgba(11,20,64,.06)}
+  .top .gs{flex:none;width:176px;margin:0;background:rgba(255,255,255,.55);border-color:#c3cee0}
+  .top .gs button.on{background:linear-gradient(120deg,#0245fb,#1747fc);border-color:transparent;color:#fff;box-shadow:0 4px 12px rgba(2,69,251,.32)}
+  .top .search{flex:1;min-width:0;width:auto;margin:0}
+  /* V21 - Uzun/Kısa Sap pill looks exactly like the book pills (1. Kitap): white, thin blue border, blue normal text */
+  .top .gs{background:rgba(255,255,255,.6);border-color:#d3dbe8}
+  .top .gs button.on{background:#fff;border-color:#a0bafa;color:#0141ee;font-weight:400;box-shadow:0 2px 6px rgba(2,69,251,.14)}
+  /* V22 - speed buttons as one capsule, same look as the book pills: thin type, white active pill with blue border */
+  .stage .speed{gap:2px;padding:3px 3px 3px 10px;margin-top:8px;background:rgba(255,255,255,.6);border:1px solid #d3dbe8;border-radius:10px;width:auto;max-width:none;align-self:flex-end;margin-right:calc((100% - var(--sw,100%)) / 2)}
+  .speed span{font-size:9.5pt;font-weight:400;color:#6b7280;margin-right:6px}
+  .speed button{font-size:9.5pt;font-weight:400;color:#6b7280;background:none;border:1px solid transparent;border-radius:8px;padding:4px 10px;box-shadow:none}
+  .speed button:hover{color:#0141ee;border-color:transparent}
+  .speed button.on{background:#fff;border-color:#a0bafa;color:#0141ee;box-shadow:0 2px 6px rgba(2,69,251,.14)}
+  /* V28 - Başa + Oynat: their own capsule at the video's bottom left, same look as the speed capsule */
+  .stage .ctl{width:var(--sw,100%);max-width:100%}
+  .stage .ctl .speed{margin-right:0}
+  .stage .speed.vc{padding:3px;align-self:flex-start}
+  .speed button:focus:not(:focus-visible){outline:none}
+  /* V16 - header split into two cards over the two panels; a bağlama neck (strings + frets) runs through both; depth */
+  .top{background:none;border:0;box-shadow:none;backdrop-filter:none}
+  .top .wrap::before,.brand{border:1px solid rgba(255,255,255,.95);border-radius:14px;box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(11,20,64,.06),0 8px 24px rgba(11,20,64,.08),0 1px 3px rgba(11,20,64,.06)}
+  .top .wrap::before{content:"";grid-column:1;grid-row:1;align-self:stretch;background:url(assets/fret-wood.svg) 0 var(--ft,8px)/auto 54px no-repeat fixed,linear-gradient(180deg,#e3e9f4,#d4dcea)}
+  .brand{grid-column:2;grid-row:1;justify-self:stretch;align-self:stretch;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(240,244,251,.82));backdrop-filter:blur(14px)}
+  /* V68 - no wood under the left header card on refresh; the page shows once the header is placed (4 s fail-safe) */
+  .top .wrap::before{content:none;background:none}
+  html.ld body{visibility:hidden;animation:ldshow 0s 4s forwards} @keyframes ldshow{to{visibility:visible}}
+  .brand b{font-size:26pt;letter-spacing:.22em;padding:2px 22px;border-radius:10px;background:rgba(255,255,255,.72);box-shadow:0 0 18px 10px rgba(255,255,255,.72)}
+  .brand b .r,.brand b .bl{text-shadow:none;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 0 #fff) drop-shadow(0 2px 3px rgba(11,20,64,.18))}
+  .brand b .r{background-image:linear-gradient(180deg,#ef4444,#b31616)}
+  .brand b .bl{background-image:linear-gradient(180deg,#2f66ff,#0133c4)}
+  /* V29 - kilim motifs (motifs.js) fill each side; ones that do not fit drop out whole, never cut */
+  .brand .mo{flex:1;min-width:0;display:flex;flex-wrap:wrap;justify-content:space-between;align-content:flex-start;gap:0 10px;height:30px;overflow:hidden;padding:0 22px}
+  .brand #mor{flex-direction:row-reverse}
+  .brand .mo img{width:auto;height:28px;margin-top:1px;flex:none;display:block;filter:drop-shadow(0 1px 1px rgba(11,20,64,.15))}
+  @media (max-width:980px){.brand .mo{display:none}}
+  /* V33 - Akort / Metronom: capsules like the Uzun Sap / Kitap buttons, text engraved; the strip opens inside the bar */
+  .brand{position:relative}
+  .brand b{transition:opacity .25s,transform .25s;transform-origin:50% 50%}
+  .brand b.back{opacity:.12}
+  .brand .tool{position:absolute;top:50%;transform:translateY(-50%);z-index:2;display:flex;align-items:center;gap:3px;height:36px;padding:3px;border:1px solid #d3dbe8;border-radius:10px;background:rgba(255,255,255,.6);box-shadow:inset 0 1px 2px rgba(11,20,64,.05)}
+  .brand .tool.l{left:16px} .brand .tool.r{right:16px}
+  .brand .tool .tb{height:100%;border:1px solid transparent;border-radius:8px;background:none;padding:0 16px;cursor:pointer;font:600 10.5pt "Segoe UI",Inter,system-ui,sans-serif;letter-spacing:.08em;color:#5f6879;text-shadow:0 1px 0 #fff,0 -1px 0 rgba(11,20,64,.16)}
+  .brand .tool .tb:hover{color:#0141ee}
+  .brand .tool.open .tb{background:#fff;border-color:#e3e7ef;color:#0141ee;box-shadow:0 1px 2px rgba(11,20,64,.06)}
+  .brand .tool.run .tb{color:#0141ee}
+  .brand .tool.run:not(.open) .tb::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;border-radius:50%;background:#0141ee;vertical-align:middle;animation:tpulse 1s infinite}
+  @keyframes tpulse{50%{opacity:.25}}
+  .brand .tool .tx{display:flex;align-items:center;gap:6px;max-width:0;overflow:hidden;opacity:0;transition:max-width .25s ease,opacity .2s ease,padding .25s;white-space:nowrap}
+  .brand .tool.open .tx{max-width:460px;opacity:1;padding:0 6px}
+  .brand .tool .ic{flex:none;width:26px;height:26px;border:1px solid #e3e7ef;border-radius:7px;background:#fff;color:#5a6378;font-size:10.5pt;line-height:1;cursor:pointer;padding:0}
+  .brand .tool .ic:hover{border-color:#a0bafa;color:#0141ee}
+  .brand .tool .ic.on{border-color:transparent;background:linear-gradient(120deg,#0245fb,#1747fc);color:#fff}
+  .brand .tool .nt{width:30px;text-align:center;font:700 12pt "Segoe UI",Inter,sans-serif;color:#0141ee}
+  .brand .tool .mt{position:relative;width:72px;flex:none;height:6px;border-radius:3px;background:linear-gradient(90deg,#f3d0d0,#f6ecd2 40%,#cdeed8 46%,#cdeed8 54%,#f6ecd2 60%,#f3d0d0)}
+  .brand .tool .mt .c{position:absolute;left:50%;top:-4px;width:1px;height:14px;background:#9aa3b5}
+  .brand .tool .mt .d{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#c81e1e;box-shadow:0 0 0 2px #fff;transition:left .12s}
+  .brand .tool .mt .d.ok{background:#1f8a3b}
+  .brand .tool .cs{width:94px;font:600 9pt "Segoe UI",Inter,sans-serif;color:#5a6378}
+  .brand .tool .ts{display:flex;gap:3px}
+  .brand .tool .ts em{font:600 9pt "Segoe UI",Inter,sans-serif;font-style:normal;color:#8f96a7;border:1px solid #e3e7ef;border-radius:6px;padding:1px 6px;background:#fff}
+  .brand .tool .ts em.on{color:#0141ee;border-color:#a0bafa;background:#eff5fe}
+  .brand .tool .bp{display:inline-flex;align-items:baseline;gap:3px;min-width:52px;justify-content:center}
+  .brand .tool .bp b{font:700 12pt "Segoe UI",Inter,sans-serif;color:#0141ee;letter-spacing:0;padding:0;background:none;box-shadow:none}
+  .brand .tool .bp small{font-size:8.5pt;color:#8f96a7}
+  .brand .tool input[type=range]{width:76px;accent-color:#0141ee;margin:0 2px}
+  .brand .tool .dots{display:flex;gap:6px;margin-right:2px}
+  .brand .tool .dots i{width:8px;height:8px;border-radius:50%;background:#dfe4ee}
+  .brand .tool .dots i.on{background:#0141ee}
+  .brand .tool .dots i:first-child.on{background:#c81e1e}
+  @media (max-width:980px){.brand .tool{display:none}}
+  /* V14 - start button in the Meet Pilot active style: blue gradient, glassy light, thin text */
+  .go{font-weight:400;font-size:10.5pt;letter-spacing:.2px;padding:9px 22px;gap:8px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:linear-gradient(120deg,#0245fb,#1747fc);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 4px 12px rgba(2,69,251,.32);-webkit-font-smoothing:antialiased;transition:transform .15s,box-shadow .15s}
+  .go:hover{background:linear-gradient(120deg,#0139d6,#0f3be6);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 16px rgba(2,69,251,.38);transform:translateY(-1px)}
+  }
+  /* V32 - song title as a PDF button; full book page viewer with Yazdır */
+  .notes .nh .pdfb{display:inline-flex;align-items:center;gap:8px;border:1px solid #f3c4c4;border-radius:10px;background:#fff;padding:4px 12px 4px 8px;font:inherit;font-size:10.5pt;font-weight:600;color:#b31616;cursor:pointer;box-shadow:0 2px 6px rgba(226,59,59,.12)}
+  .notes .nh .pdfb svg{width:20px;height:24px;flex:none}
+  .notes .nh .pdfb:hover{background:#fff4f4;border-color:#e23b3b}
+  /* V34 - book-page viewer: glass bar, capsules like Uzun Sap / Kitap with engraved text, the page big and sharp, scrolls */
+  .pdfv{position:fixed;inset:0;z-index:80;background:rgba(226,231,240,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center}
+  .pdfv[hidden]{display:none}
+  .pdfv .pb{display:flex;align-items:center;gap:10px;width:calc(100% - 32px);max-width:1180px;margin:12px 16px 0;padding:7px 8px 7px 16px;border:1px solid #d3dbe8;border-radius:14px;background:rgba(255,255,255,.85);box-shadow:0 6px 24px rgba(11,20,64,.08)}
+  .pdfv .pn{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+  .pdfv .pn svg{width:20px;height:24px;flex:none}
+  .pdfv .pn b{font:600 13pt "Segoe UI",Inter,sans-serif;color:#1f2a44;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pdfv .pn small{font-size:9.5pt;color:#8f96a7;white-space:nowrap}
+  .pdfv .vs{display:flex;gap:3px;height:36px;padding:3px;border:1px solid #d3dbe8;border-radius:10px;background:rgba(255,255,255,.6);box-shadow:inset 0 1px 2px rgba(11,20,64,.05)}
+  .pdfv .vs[hidden]{display:none}
+  .pdfv .vs button{display:inline-flex;align-items:center;gap:7px;border:1px solid transparent;border-radius:8px;background:none;padding:0 16px;cursor:pointer;font:600 10.5pt "Segoe UI",Inter,system-ui,sans-serif;letter-spacing:.08em;color:#5f6879;text-shadow:0 1px 0 #fff,0 -1px 0 rgba(11,20,64,.16)}
+  .pdfv .vs button svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 0 #fff)}
+  .pdfv .vs button:hover{color:#0141ee}
+  .pdfv .vs button.on{background:#fff;border-color:#e3e7ef;color:#0141ee;box-shadow:0 1px 2px rgba(11,20,64,.06)}
+  .pdfv .pg{flex:1;min-height:0;width:100%;overflow:auto;padding:16px 16px 40px}
+  .pdfv .pg img{display:block;width:min(1180px,100%);height:auto;margin:0 auto;background:#fff;border-radius:6px;box-shadow:0 18px 48px rgba(11,20,64,.18)}
+  @media print{body.printing > *:not(.pdfv){display:none !important} body.printing .pdfv{position:static;display:block;background:none;-webkit-backdrop-filter:none;backdrop-filter:none} body.printing .pdfv .pb{display:none} body.printing .pdfv .pg{overflow:visible;padding:0} body.printing .pdfv .pg img{width:100%;box-shadow:none;border-radius:0} @page{margin:8mm}}
+  /* V35 - fine text, measured from the Uzun Sap button: 400, 9.5pt, no tracking, no shadow */
+  .brand .tool .tb,.pdfv .vs button{font-family:"Segoe UI",Inter,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-style:normal;letter-spacing:normal;text-shadow:none;font-weight:400;font-size:9.5pt;text-transform:none;color:#6b7280;padding:0 14px}
+  .brand .tool .tb:hover,.pdfv .vs button:hover{color:#0b1440}
+  .brand .tool.open .tb,.pdfv .vs button.on{background:#fff;border-color:#a0bafa;color:#0141ee;box-shadow:none}
+  .brand .tool.run .tb{color:#0141ee}
+  .brand .tool .nt,.brand .tool .cs,.brand .tool .ts em,.brand .tool .bp b,.brand .tool .bp small,.brand .tool .ic{font-family:"Segoe UI",Inter,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-style:normal;letter-spacing:normal;text-shadow:none;font-weight:400}
+  /* V57 - phones/tablets have no Segoe UI: Open Sans (its design sibling) instead of the heavier Inter */
+  @media (pointer:coarse){body,.brand .tool .tb,.pdfv .vs button,.brand .tool .nt,.brand .tool .cs,.brand .tool .ts em,.brand .tool .bp b,.brand .tool .bp small,.brand .tool .ic{font-family:"Segoe UI","Open Sans",Inter,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}}
+  .brand .tool .nt{font-size:11pt;color:#0141ee}
+  .brand .tool .cs{font-size:8.5pt;color:#6b7280}
+  .brand .tool .ts em{font-size:8pt;color:#8f96a7;padding:1px 6px}
+  .brand .tool .bp b{font-size:11pt;color:#0141ee}
+  .brand .tool .bp small{font-size:8pt;color:#8f96a7}
+  .brand .tool .ic{font-size:10pt;color:#6b7280;display:inline-flex;align-items:center;justify-content:center}
+  .brand .tool .ic svg,.pdfv .vs button svg{width:13px;height:13px;flex:none;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;filter:none}
+  .brand .tool .ic.on{background:#fff;border-color:#a0bafa;color:#0141ee}
+  .pdfv .vs button{gap:8px}
+  /* V36 - Uzun Sap size: closed = one 28px button, min 84px; the capsule comes only with the open strip */
+  .brand .tool .tb{min-width:84px;box-shadow:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+  .brand .tool:not(.open){height:28px;padding:0;border:0;background:none;box-shadow:none}
+  .brand .tool:not(.open) .tb{border-color:#d3dbe8;background:rgba(255,255,255,.75)}
+  .brand .tool:not(.open) .tb:hover{border-color:#a0bafa}
+  .brand .tool.open .tb{box-shadow:0 2px 6px rgba(2,69,251,.14)}
+  /* V37 - metronome fine and in colour; the bpm number is typed */
+  .brand .tool.r .bn{width:30px;height:24px;padding:0 2px;border:1px solid transparent;border-radius:6px;background:none;font:400 11pt "Segoe UI",Inter,system-ui,sans-serif;color:#0141ee;text-align:right;font-variant-numeric:tabular-nums;outline:none;cursor:text}
+  .brand .tool.r .bn:hover{border-color:#dbe4fb}
+  .brand .tool.r .bn:focus{border-color:#a0bafa;background:#fff;box-shadow:0 0 0 3px rgba(2,69,251,.10);text-align:center}
+  .brand .tool.r .bp{align-items:center}
+  .brand .tool.r input[type=range]{-webkit-appearance:none;appearance:none;width:84px;height:16px;margin:0 4px;background:none;cursor:pointer;--p:25%}
+  .brand .tool.r input[type=range]::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:linear-gradient(90deg,#7ea4ff,#0141ee var(--p),#e3e8f2 var(--p))}
+  .brand .tool.r input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;margin-top:-4.5px;border-radius:50%;background:#fff;border:1.5px solid #0141ee;box-shadow:0 1px 4px rgba(2,69,251,.30)}
+  .brand .tool.r input[type=range]::-moz-range-track{height:3px;border-radius:2px;background:#e3e8f2}
+  .brand .tool.r input[type=range]::-moz-range-progress{height:3px;border-radius:2px;background:linear-gradient(90deg,#7ea4ff,#0141ee)}
+  .brand .tool.r input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:#fff;border:1.5px solid #0141ee;box-shadow:0 1px 4px rgba(2,69,251,.30)}
+  .brand .tool.r .dots{gap:5px}
+  .brand .tool.r .dots i{width:6px;height:6px;background:#d9e3fb;transition:background .08s,box-shadow .08s}
+  .brand .tool.r .dots i:first-child{background:#f6d4d8}
+  .brand .tool.r .dots i.on{background:#0141ee;box-shadow:0 0 0 3px rgba(2,69,251,.16)}
+  .brand .tool.r .dots i:first-child.on{background:#e5484d;box-shadow:0 0 0 3px rgba(229,72,77,.18)}
+  .brand .tool.r .ic{color:#3d6af5;border-color:#e1e8fb}
+  .brand .tool.r .ic:hover{border-color:#a0bafa;color:#0141ee;background:#f6f8ff}
+  .brand .tool.r .ic.on{color:#e5484d;border-color:#f3c4c7;background:#fff}
+  @media (max-width:980px){
+    main{grid-template-columns:minmax(0,1fr)}
+    main > section{order:-1}
+    .cur{position:static;max-height:none}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    .top .wrap{grid-template-columns:auto 1fr auto;height:64px;gap:8px}
+    .brand img,.top .grp{width:44px;height:44px}
+    .brand b{font-size:13pt}
+    .tabs{grid-column:1/-1;grid-row:2;height:44px;justify-content:flex-start}
+    .top .wrap{grid-template-rows:64px 44px;height:auto}
+    .screen:has(.idle){aspect-ratio:auto}
+    .info{flex-direction:column}
+    footer .wrap{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="assets/logo-atolye-t.png?v=50" alt="Bağlama Atölyesi"><b><span class="r">BAĞLAMA</span> <span class="bl">ATÖLYESİ</span></b></a>
+    <nav class="tabs" id="grp"></nav>
+    <img class="grp" src="assets/logo-atolye-saz-t.png?v=73" alt="Bağlama Atölyesi - Anadolu'nun Avazı">
+  </div>
+</div>
+
+<div class="wrap">
+  <main>
+    <aside class="cur">
+      <div class="side">
+        <div class="info">
+          <div class="seg gs" id="gsw"></div>
+          <div class="txt" id="meta"></div>
+          <div class="nav"><button id="prev">◀ Önceki</button><button id="next">Sonraki ▶</button></div>
+        </div>
+      </div>
+      <div class="head">
+        <div class="t"><b>Ders Listesi</b><span id="tot"></span></div>
+        <input class="search" id="q" type="search" placeholder="Parça ara…" autocomplete="off">
+      </div>
+      <div class="seg" id="seg"></div>
+      <div class="mods" id="mods"></div>
+    </aside>
+    <section>
+      <div class="stage">
+        <div class="lbox l"></div><img class="lg l" src="assets/logo-atolye-t.png?v=50" alt=""><div class="sap" id="sap" hidden></div><div class="lbox"></div><img class="lg r" src="assets/logo-atolye-saz-t.png?v=73" alt="">
+        <div class="lyr" id="lyr" hidden></div>
+        <div class="screen" id="screen"></div>
+        <div class="speed" id="speed" hidden><span>Hız</span></div>
+      </div>
+      <div class="notes">
+        <div class="nh"><b>Notalar</b><span id="nt"></span></div>
+        <div class="sheet" id="sheet"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div id="quote"></div>
+    <div class="credit">Tasarım: İbrahim UMULU</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.min.js"></script>
+<script src="data.js?v=49"></script>
+<script src="media.js"></script>
+<script src="lyrics.js?v=83"></script>
+<script src="notes.js?v=83"></script>
+<script src="tools.js?v=40"></script>
+<script>
+const D = window.DATA;
+let g = 0, cur = null, q = '';
+const open = new Set([0]);
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const split = t => { const m = t.match(/^(\d+)\.\s*(.*)$/); return m ? [m[1], m[2]] : ['', t]; };
+const low = s => s.toLocaleLowerCase('tr');
+const book = n => +n.replace(/[^0-9]/g, '') + '. Kitap';
+const M = window.MEDIA || {};
+const N = window.NOTES || {}, has = x => !!(N[split(x.t)[1]] || (window.LYRICS || {})[split(x.t)[1]]);   // V24 - no video, but notes/lyrics: still opens
+const frame = id => M[id]
+  ? '<video src="' + M[id] + '" controls playsinline preload="metadata"></video>'
+  : '<iframe src="https://drive.google.com/file/d/' + id + '/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+
+const SPEEDS = [0.25, 0.5, 1, 1.5, 2];
+let rate = 1;
+SPEEDS.forEach(r => {
+  const b = document.createElement('button');
+  b.textContent = String(r).replace('.', ',') + '×'; b.dataset.r = r;
+  b.onclick = () => { rate = r; speed(); };
+  $('speed').appendChild(b);
+});
+// V28 - its own capsule under the video's bottom left, mirroring the Hız capsule (the player's own controls stay)
+(() => { const g = document.createElement('div'); g.className = 'speed vc'; g.id = 'vc'; g.hidden = true;
+  [['⏮ Başa', v => { v.pause(); v.currentTime = 0; }], ['▶ Oynat', v => { v.play(); }]].forEach(([t, f]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = t;
+    b.onclick = () => { const v = $('screen').querySelector('video'); if (v) f(v); }; g.appendChild(b); });
+  const w = document.createElement('div'); w.className = 'ctl'; $('speed').before(w); w.append(g, $('speed')); })();
+let player = null;
+function speed(){
+  const v = $('screen').querySelector('video');
+  $('speed').hidden = $('vc').hidden = !v;
+  if (v && window.Plyr && !player) {
+    player = new Plyr(v, { autoplay: false, settings: ['speed'], speed: { selected: rate, options: SPEEDS },
+      controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen'],
+      i18n: { speed: 'Hız', normal: '1×', settings: 'Ayarlar', play: 'Oynat', pause: 'Duraklat', mute: 'Sesi kapat', unmute: 'Sesi aç', enterFullscreen: 'Tam ekran', exitFullscreen: 'Tam ekrandan çık' } });
+    v.addEventListener('ratechange', () => { if (v.playbackRate !== rate) { rate = v.playbackRate; speed(); } });
+  }
+  if (v) { v.preservesPitch = true; v.defaultPlaybackRate = v.playbackRate = rate; }
+  $('speed').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.r === rate));
+  gaps(); gapsFit();
+}
+
+function show(html){
+  if (player) { player.destroy(); player = null; }
+  $('screen').innerHTML = html;
+}
+
+function ready(){
+  const out = [];
+  D.groups[g].levels.forEach((L, li) => L.items.forEach((x, ii) => { if (x.id) out.push({ ...x, li, ii }); }));
+  return out;
+}
+function idle(){
+  const f = ready()[0];
+  show('<div class="idle"><img src="assets/logo-atolye-t.png?v=50" alt="">' +
+    (f ? '<button class="go" id="go">▶ Başla: ' + esc(split(f.t)[1]) + '</button><small>' + D.groups[g].name + ' · ' + book(D.groups[g].levels[f.li].name) + '</small>'
+       : '<small>Bu bölümde henüz video yok</small>') + '</div>');
+  if (f) $('go').onclick = () => play(f);
+  lyrics(f ? split(f.t)[1] : '');   // V18c - the waiting song's lyrics show before Başla too
+  speed();
+  $('meta').innerHTML = '<h2 class="pick">Listeden bir parça seçin</h2>';
+  notes('', 'Listeden bir parça seçin');
+  navState();
+}
+function notes(name, msg, key){
+  $('nt').textContent = name;
+  const S = N[key] || N[name];   // V46 - key = "<book> <title>" when the same title is in two books
+  // V32 - the song title becomes a button that opens the book's full page (with Yazdır) when the page exists
+  if (S && S.page) { $('nt').innerHTML = '<button type="button" class="pdfb"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M3 1h12l6 6v19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" fill="#fff" stroke="#e23b3b" stroke-width="1.6"/><path d="M15 1v6h6" fill="#fde2e2" stroke="#e23b3b" stroke-width="1.6" stroke-linejoin="round"/><rect x="0" y="13" width="19" height="9" rx="2" fill="#e23b3b"/><text x="9.5" y="20.2" font-size="6.6" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">PDF</text></svg>' + esc(name) + '</button>';
+    $('nt').firstChild.onclick = () => window.openPage && openPage(S.page, name, S.pageBW); }
+  if (!S) { $('sheet').innerHTML = '<div class="ph">' + msg + '</div>'; sap(); return; }
+  // V25 - one group (A, B, C ...) at a time; the letters on the right turn the page
+  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=82" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
+    '<div class="grp-nav">' + S.groups.map(k => '<button data-k="' + k + '">' + k + '</button>').join('') + '</div>';
+  const go = k => { $('sheet').querySelectorAll('[data-k]').forEach(e => e.tagName === 'IMG' ? e.hidden = e.dataset.k !== k : e.classList.toggle('on', e.dataset.k === k)); sap(S, k);
+    // V40 - many groups: the list starts at the top (A) and slides down with the active letter
+    const nv = $('sheet').querySelector('.grp-nav'), ob = nv && nv.querySelector('button.on');
+    if (ob) { const y = ob.offsetTop - nv.offsetTop; if (y < nv.scrollTop || y + ob.offsetHeight > nv.scrollTop + nv.clientHeight) nv.scrollTop = y - (nv.clientHeight - ob.offsetHeight) / 2; } };
+  $('sheet').querySelector('.grp-nav').onclick = e => { const b = e.target.closest('button'); if (b) go(b.dataset.k); };
+  go(S.groups[0]);
+  // follow the teacher: cue = [[seconds, group], ...]; V27 - per video id, and pts move the dot on the saz
+  const v = $('screen').querySelector('video'), by = o => Array.isArray(o) ? o : (o || {})[cur && cur.id] || [];
+  const cue = by(S.cue), pts = by(S.pts);
+  if (v && (cue.length || pts.length)) { let last = '', lp;
+    const tick = () => { const t = v.currentTime; let k = cue.length ? S.groups[0] : last || S.groups[0], p = null;
+      cue.forEach(c => { if (t >= c[0]) k = c[1]; });
+      pts.forEach(c => { if (t >= c[0] - .05 && t < c[0] + 1.2) p = c[1]; });
+      if (k !== last) { last = k; lp = p; go(k); if (p != null) sap(S, k, p); } else if (p !== lp) { lp = p; sap(S, k, p); } };
+    v.addEventListener('timeupdate', tick); v.addEventListener('seeked', tick); }
+}
+// V26 - perde haritasi. Perde positions: ACORDER perde table (Uzun Sap, # branch), n = semitones from the open string.
+const PERDE_N = [0, .5, 1, 2, 3, 4, 4.5, 5, 5.5, 6, 7, 8, 9, 9.5, 10, 10.5, 11, 12, 12.5, 13, 14, 15, 16, 16.98];
+function sap(S, k, now){
+  const el = $('sap'), P = S && S.perde && S.perde[k];
+  if (!P) { el.hidden = true; el.innerHTML = ''; sapLast = null; return; }
+  el.hidden = false; sapLast = [S, k, now];
+  // V26g - his reference drawing (temp/saz-ref.png), line for line: teardrop tekne bottom-left, thin neck to the top-right corner, burgu with pegs;
+  // 3 courses (üst 3 tel, orta 2, alt 2), no numbers; dots = the perdes of the group, the one pressed now is the big one
+  const kisa = /K[ıi]sa/.test(D.groups[g].name), last = kisa ? 17 : 23;
+  const W = el.clientWidth || 300, H = el.clientHeight || 440, lg = document.querySelector('.lg.l'), er = el.getBoundingClientRect();
+  const top = lg ? lg.getBoundingClientRect().bottom - er.top + 4 : H * .38;
+  let ax = 0, ay = 0, hx = W - 12, hy = top, tot = 0, bw = 0;
+  for (let i = 0; i < 3; i++) { bw = tot * .11; ax = 8 + bw * .8; ay = H - 8 - bw * .8; tot = Math.hypot(hx - ax, ay - hy); }   // keep the tekne inside the frame
+  const ang = Math.atan2(ay - hy, hx - ax) * 180 / Math.PI;
+  const bl = tot * .39, nw = Math.max(5, tot * .015), x0 = tot * .3, xn = tot * .83, cy = [-nw * .6, 0, nw * .6];   // tekne length, half neck width, neck start, nut
+  const fx = n => 1 - Math.pow(2, -n / 12), L = (xn - bl - 4) / fx(PERDE_N[last]) / 1.01, x = n => xn - L * fx(n);
+  const used = {}; P.split(' ').forEach(p => used[p] = (used[p] || 0) + 1);
+  const ln = '#3a3f45', st = ' fill="none" stroke="' + ln + '"';
+  let o = '<path d="M' + bl + ' ' + (-nw * .2) + ' C' + bl * .8 + ' ' + (-bw * .4) + ' ' + bl * .64 + ' ' + (-bw) + ' ' + bl * .4 + ' ' + (-bw) +
+    ' C' + bl * .14 + ' ' + (-bw) + ' 0 ' + (-bw * .62) + ' 0 0 C0 ' + bw * .62 + ' ' + bl * .14 + ' ' + bw + ' ' + bl * .4 + ' ' + bw +
+    ' C' + bl * .64 + ' ' + bw + ' ' + bl * .8 + ' ' + bw * .4 + ' ' + bl + ' ' + nw * .2 + ' Z" fill="#fff"' + st + ' stroke-width="1.1"/>';
+  const eb = tot * .11;   // eşik (bridge)
+  o += '<rect x="' + (eb - 1.6) + '" y="' + (-tot * .024) + '" width="3.2" height="' + tot * .048 + '" rx="1" fill="#fff"' + st + ' stroke-width="1"/>';
+  o += '<rect x="' + x0 + '" y="' + (-nw) + '" width="' + (xn - x0) + '" height="' + nw * 2 + '" fill="#fff"' + st + ' stroke-width="1.1"/>';
+  for (let p = 1; p <= last; p++) { const xx = x(PERDE_N[p]);   // perde bağı: a thin double band
+    o += '<rect x="' + (xx - .8) + '" y="' + (-nw) + '" width="1.6" height="' + nw * 2 + '" fill="#fff"' + st + ' stroke-width="' + (Number.isInteger(PERDE_N[p]) ? .9 : .6) + '"/>'; }
+  // burgu: narrow box, rounded curl at the tip, 4 pegs on the top side, 3 small ones on the other side
+  const hd = tot - xn;
+  o += '<path d="M' + xn + ' ' + (-nw * .95) + ' L' + (tot - hd * .12) + ' ' + (-nw * .95) + ' Q' + tot + ' ' + (-nw * 1.3) + ' ' + tot + ' ' + (-nw * .2) +
+    ' Q' + tot + ' ' + nw * .9 + ' ' + (tot - hd * .14) + ' ' + nw * .9 + ' L' + xn + ' ' + nw * .9 + ' Z" fill="#fff"' + st + ' stroke-width="1.1"/>';
+  o += '<line x1="' + xn + '" x2="' + xn + '" y1="' + (-nw) + '" y2="' + nw + '" stroke="' + ln + '" stroke-width="2"/>';
+  [.22, .44, .66, .86].forEach(f => { const px = xn + hd * f; o += '<line x1="' + px + '" x2="' + (px - 2) + '" y1="' + (-nw) + '" y2="' + (-nw - 6) + '" stroke="' + ln + '" stroke-width="1"/><circle cx="' + (px - 2.5) + '" cy="' + (-nw - 9.5) + '" r="3.6" fill="#fff"' + st + ' stroke-width="1"/>'; });
+  [.34, .56, .78].forEach(f => o += '<circle cx="' + (xn + hd * f) + '" cy="' + (nw + 2.6) + '" r="2" fill="#fff"' + st + ' stroke-width=".9"/>');
+  [[-1.2, 0, 1.2], [-.7, .7], [-.7, .7]].forEach((g2, i) => g2.forEach(d => { const y = cy[i] * .8 + d * .8;
+    o += '<line x1="' + tot * .015 + '" x2="' + (xn + hd * .9) + '" y1="' + y + '" y2="' + y + '" stroke="' + ln + '" stroke-width=".45"/>'; }));
+  Object.keys(used).forEach(p => { p = +p;
+    const xx = p ? (x(PERDE_N[p - 1]) + x(PERDE_N[p]) * 2) / 3 : xn + 4, y = cy[2], on = now === p, dim = now != null && !on;
+    o += '<circle cx="' + xx + '" cy="' + y + '" r="' + (on ? 5.5 : 3.6) + '" fill="' + (dim ? '#a0bafa' : '#0141ee') + '" stroke="#fff" stroke-width="' + (on ? 1.6 : 1) + '"/>'; });
+  el.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Perde haritası ' + k + '"><g transform="translate(' + ax + ' ' + ay + ') rotate(' + (-ang) + ')">' + o + '</g></svg>';
+}
+let sapLast = null;
+addEventListener('resize', () => sapLast && !$('sap').hidden && sap(...sapLast));
+function play(x){
+  cur = { g, li: x.li, ii: x.ii, id: x.id };
+  show(x.id ? frame(x.id) : '<div class="idle"><img src="assets/logo-atolye-t.png?v=50" alt=""><small>Bu parçanın videosu yakında</small></div>'); speed();
+  const [n, t] = split(x.t);
+  $('meta').innerHTML = '<h2>' + esc(t) + '</h2><div class="sub"><span class="gn">' + D.groups[g].name + ' · </span>' + book(D.groups[g].levels[x.li].name) + (n ? ' · Parça ' + n : '') + '</div>';
+  notes(t, 'Bu parçanın notası yakında', D.groups[g].levels[x.li].name + ' ' + t);
+  lyrics(t);
+  if (desk()) open.clear();
+  open.add(x.li);
+  renderList(); navState();
+}
+// V18 - lyrics.js: { "<song title>": "lines, a blank line between stanzas" }
+function lyrics(t){
+  const L = (window.LYRICS || {})[t], el = $('lyr');
+  el.hidden = !L; el.classList.remove('sync');
+  // optional LRC time tag per line: "[1:23] line" or "[1:23.5] line"
+  el.innerHTML = L ? L.trim().split(/\n\s*\n/).map(v => '<p>' + v.split('\n').map(ln => {
+    const m = ln.match(/^\s*\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
+    return m ? '<span data-t="' + (+m[1] * 60 + +m[2]) + '">' + esc(m[3]) + '</span>' : '<span' + (/^\s*Bağlantı\.\.\./.test(ln) ? ' class="bag"' : '') + '>' + esc(ln) + '</span>';
+  }).join('') + '</p>').join('') : '';
+  fitLyrics();
+  const v = $('screen').querySelector('video'), S = [...el.querySelectorAll('span[data-t]')];
+  if (!L || !v || !S.length) return;
+  el.classList.add('sync');
+  const tick = () => { let k = -1; S.forEach((x, i) => { if (v.currentTime >= +x.dataset.t) k = i; }); S.forEach((x, i) => x.classList.toggle('on', i === k)); };
+  v.addEventListener('timeupdate', tick); v.addEventListener('seeked', tick); tick();
+}
+// all lines visible, no scrollbar: shrink the type until the text fits the box
+function fitLyrics(){
+  const el = $('lyr'); if (el.hidden) return;
+  const fit = (min) => { let f = 10.5; el.style.fontSize = f + 'pt';
+    const over = () => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;   // columns overflow sideways
+    while (over() && f > min) { f -= .25; el.style.fontSize = f + 'pt'; }
+    return !over(); };
+  el.classList.remove('two');
+  if (!fit(7.5)) { el.classList.add('two'); fit(6); }   // long lyrics: two columns before the type gets too small
+  // V62 - centre the block by its widest stanza; its lines stay left-aligned
+  el.style.marginLeft = '';
+  if (el.classList.contains('two') || !el.clientWidth) return;
+  const P = [...el.querySelectorAll('p')], r = document.createRange();
+  P.forEach(p => p.classList.toggle('cr', P.length > 1 && p === P[P.length - 1] && p.children.length === 1));
+  let w = 0; el.querySelectorAll('p:not(.cr) span').forEach(x => { r.selectNodeContents(x); w = Math.max(w, r.getBoundingClientRect().width); });
+  if (w) el.style.marginLeft = Math.max(0, (el.clientWidth - w) / 2 - 6) + 'px';
+}
+addEventListener('resize', () => fitLyrics());
+function playQuote(){
+  cur = null; lyrics('');
+  show(frame(D.quote.id)); speed();
+  $('meta').innerHTML = '<h2>' + esc(D.quote.t) + '</h2>';
+  renderList(); navState();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function pos(){ const r = ready(); return cur && cur.g === g ? r.findIndex(x => x.li === cur.li && x.ii === cur.ii) : -1; }
+function navState(){ const r = ready(), i = pos(); $('prev').disabled = i <= 0; $('next').disabled = i < 0 ? !r.length : i >= r.length - 1; }
+$('prev').onclick = () => { const i = pos(); if (i > 0) play(ready()[i - 1]); };
+$('next').onclick = () => { const r = ready(), i = pos(); if (i < r.length - 1) play(r[i + 1]); else if (i < 0 && r.length) play(r[0]); };
+
+const gaps = () => { const st = document.querySelector('.stage'), sc = $('screen'); if (!st || !desk()) return;
+  const a = st.getBoundingClientRect(), b = sc.getBoundingClientRect();
+  st.style.setProperty('--sw', b.width + 'px'); st.style.setProperty('--gw', (b.left - a.left) + 'px'); st.style.setProperty('--lw', Math.max(0, Math.min(150, b.left - a.left - 24)) + 'px'); st.style.setProperty('--gl', (b.left - a.left) / 2 + 'px'); st.style.setProperty('--gr', (b.right - a.left + a.right - a.left) / 2 + 'px'); };
+addEventListener('resize', gaps); addEventListener('load', gaps);
+// V18d - refit the lyrics once the real column width is known; a column too thin to read hides frame + lyrics
+const gapsFit = () => { const st = document.querySelector('.stage'); if (st && desk()) st.classList.toggle('narrow', parseFloat(st.style.getPropertyValue('--gw')) < 170); fitLyrics(); };
+addEventListener('resize', gapsFit); addEventListener('load', gapsFit);
+const desk = () => matchMedia('(min-width:981px)').matches;
+// V64 - Kitap 3 runs to 25: a line after 14 marks 15-25 as extra pieces, empty numbers wait for them
+const EK = { K03: [15, 25] };
+function ek(L, q){
+  const r = EK[L.name]; if (!r || q) return '';
+  const has = new Set(L.items.map(x => +split(x.t)[0]));
+  let h = '<li class="ek"><span>Ek parçalar</span></li>';
+  for (let n = r[0]; n <= r[1]; n++) if (!has.has(n)) h += '<li><div class="row x"><span class="n">' + String(n).padStart(2, '0') + '</span><span></span><span class="s"></span></div></li>';
+  return h;
+}
+function renderList(){
+  const G = D.groups[g];
+  $('gsw').innerHTML = D.groups.map((x, i) => '<button class="' + (i === g ? 'on' : '') + '" data-g="' + i + '">' + x.name + '</button>').join('');
+  $('seg').innerHTML = G.levels.map((L, li) => '<button class="' + (open.has(li) ? 'on' : '') + '" data-l="' + li + '">' + book(L.name) + '<em>' + L.items.filter(x => x.id).length + ' / ' + L.items.length + '</em></button>').join('');
+  $('mods').classList.toggle('q', !!q);
+  $('grp').innerHTML = D.groups.map((x, i) => '<button class="' + (i === g ? 'on' : '') + '" data-g="' + i + '">' + x.name + '</button>').join('');
+  const all = G.levels.flatMap(L => L.items);
+  $('tot').textContent = all.filter(x => x.id).length + ' / ' + all.length + ' video hazır';
+  let html = '';
+  G.levels.forEach((L, li) => {
+    const items = L.items.map((x, ii) => ({ ...x, ii })).filter(x => !q || low(x.t).includes(q));
+    if (q && !items.length) return;
+    const n = L.items.filter(x => x.id).length, isOpen = q || open.has(li);
+    html += '<div class="mod' + (isOpen ? ' open' : '') + '"><button data-l="' + li + '"><span class="k">' + book(L.name) + '</span><span class="ch">▼</span>' +
+      '<span class="p"><span>' + n + ' / ' + L.items.length + ' hazır</span><span class="bar"><i style="width:' + (L.items.length ? n / L.items.length * 100 : 0) + '%"></i></span></span>' +
+      '</button><ol>' +
+      items.map(x => {
+        const [num, t] = split(x.t);
+        const on = cur && cur.g === g && cur.li === li && cur.ii === x.ii;
+        // V24b - every row opens; no-video rows keep the crossed camera and show notes/lyrics
+        return '<li><button class="row' + (x.id ? '' : ' off') + (on ? ' on' : '') + '" data-li="' + li + '" data-ii="' + x.ii + '"><span class="n">' + num + '</span><span>' + esc(t) + '</span>' +
+          (x.id ? '<span class="s">▶</span>' : '<span class="s" title="Video yok"><svg viewBox="0 0 24 24" aria-label="Video yok"><path d="M16 16v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m4 0h3a2 2 0 0 1 2 2v3.3l5-3.3v10"/><path d="M2 2l20 20"/></svg></span>') + '</button></li>';
+      }).join('') + ek(L, q) + '</ol></div>';
+  });
+  $('mods').innerHTML = html || '<div class="empty">Sonuç yok</div>';
+}
+
+$('grp').onclick = $('gsw').onclick = e => { const b = e.target.closest('button'); if (!b) return; g = +b.dataset.g; open.clear(); open.add(0); renderList(); if (!cur || cur.g !== g) idle(); else navState(); };
+$('mods').onclick = e => {
+  const r = e.target.closest('button.row');
+  if (r) { const li = +r.dataset.li, ii = +r.dataset.ii; play({ ...D.groups[g].levels[li].items[ii], li, ii }); return; }
+  const h = e.target.closest('.mod > button');
+  if (h) { const li = +h.dataset.l; if (desk()) { open.clear(); open.add(li); } else open.has(li) ? open.delete(li) : open.add(li); renderList(); }
+};
+$('seg').onclick = e => { const b = e.target.closest('button'); if (!b) return; open.clear(); open.add(+b.dataset.l); renderList(); };
+$('q').oninput = e => { q = low(e.target.value.trim()); renderList(); };
+
+const Q = D.quote;
+const qm = Q ? Q.t.replace(/ /g, ' ').match(/^(.*?)\s*((?:K\d+\s*)*)$/) : null;
+const qh = qm ? '<span class="qt">“' + esc(qm[1].trim()) + '”</span>' + (qm[2].trim() ? '<span class="qk">' + qm[2].trim().split(/\s+/).map(k => '<em>' + esc(k) + '</em>').join('') + '</span>' : '') : '';
+if (Q) $('quote').innerHTML = Q.id ? '<button class="q" id="qa" title="Videoyu izle"><i>▶</i>' + qh + '</button>' : '<div class="q">' + qh + '</div>';
+if (Q && Q.id) $('qa').onclick = playQuote;
+renderList();
+idle();
+// V17 - desktop: Uzun/Kısa Sap + search sit in the header's left card, the list gets their row
+const tb = document.createElement('div'); tb.className = 'tb';
+const deskMQ = matchMedia('(min-width:981px)');
+const placeBar = () => {
+  if (deskMQ.matches) { document.querySelector('.top .wrap').prepend(tb); tb.append($('gsw'), $('q')); }
+  else { tb.remove(); $('meta').before($('gsw')); document.querySelector('.cur .head .t').after($('q')); }
+  gaps(); gapsFit();
+};
+deskMQ.addEventListener('change', placeBar); placeBar();
+document.documentElement.classList.remove('ld'); // V68
+</script>
+</body>
+</html>
