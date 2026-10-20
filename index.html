@@ -313,7 +313,7 @@
     .notes .nh b::before{content:"\266A";width:26px;height:26px;flex:none;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-size:13pt;color:#fff;background:linear-gradient(135deg,#a78bfa,#6d28d9);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 3px 8px rgba(109,40,217,.35)}
     footer{background:none;border:0}
     footer .wrap{margin:0 24px 8px;padding:4px 16px;border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 #fff,0 8px 24px rgba(11,20,64,.07),0 1px 3px rgba(11,20,64,.05)}
-    /* V74 - footer split into two cards over the two panels, same as the header: quote | K01-K03 + credit */
+    /* V85 - footer split into two cards over the two panels, same as the header: quote | K01-K03 + credit */
     footer .wrap{display:grid;grid-template-columns:420px minmax(0,1fr);gap:16px;padding:0;border:0;border-radius:0;background:none;backdrop-filter:none;box-shadow:none}
     footer .fl,footer .fr{display:flex;align-items:center;gap:12px;min-width:0;padding:4px 16px;border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 #fff,0 8px 24px rgba(11,20,64,.07),0 1px 3px rgba(11,20,64,.05)}
     footer .fr{justify-content:space-between}
@@ -557,7 +557,7 @@
 <script src="data.js?v=49"></script>
 <script src="media.js"></script>
 <script src="lyrics.js?v=83"></script>
-<script src="notes.js?v=83"></script>
+<script src="notes.js?v=84"></script>
 <script src="tools.js?v=40"></script>
 <script>
 const D = window.DATA;
@@ -633,7 +633,7 @@ function notes(name, msg, key){
     $('nt').firstChild.onclick = () => window.openPage && openPage(S.page, name, S.pageBW); }
   if (!S) { $('sheet').innerHTML = '<div class="ph">' + msg + '</div>'; sap(); return; }
   // V25 - one group (A, B, C ...) at a time; the letters on the right turn the page
-  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=82" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
+  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=84" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
     '<div class="grp-nav">' + S.groups.map(k => '<button data-k="' + k + '">' + k + '</button>').join('') + '</div>';
   const go = k => { $('sheet').querySelectorAll('[data-k]').forEach(e => e.tagName === 'IMG' ? e.hidden = e.dataset.k !== k : e.classList.toggle('on', e.dataset.k === k)); sap(S, k);
     // V40 - many groups: the list starts at the top (A) and slides down with the active letter
@@ -807,7 +807,7 @@ $('q').oninput = e => { q = low(e.target.value.trim()); renderList(); };
 const Q = D.quote;
 const qm = Q ? Q.t.replace(/ /g, ' ').match(/^(.*?)\s*((?:K\d+\s*)*)$/) : null;
 const qh = qm ? '<span class="qt">“' + esc(qm[1].trim()) + '”</span>' : '';
-// V74 - K01-K03 sit in the right footer card; a click still plays the quote video
+// V85 - K01-K03 sit in the right footer card; a click still plays the quote video
 if (qm && qm[2].trim()) $('qk').innerHTML = qm[2].trim().split(/\s+/).map(k => '<em>' + esc(k) + '</em>').join('');
 if (Q) $('quote').innerHTML = Q.id ? '<button class="q" id="qa" title="Videoyu izle"><i>▶</i>' + qh + '</button>' : '<div class="q">' + qh + '</div>';
 if (Q && Q.id) { $('qa').onclick = playQuote; $('qk').onclick = playQuote; $('qk').title = 'Videoyu izle'; $('qk').style.cursor = 'pointer'; }
