@@ -118,19 +118,19 @@ Yoruldu Bileklerim
 Kamil Nizam Bıçalı · Çanakkale - Biga`,
 "Arda Boylarında": `Arda Boylarında Kırmızı Erik
 Helime'nin Ardında On Yedi Belik
-Bağlantı:
+Bağlantı...
 Ah Anneciğim Ah Anneciğim Yaktın Ya Beni
 Bu Genç Yaşta Denizlere Attın Ya Beni
 
 Aliverin Feracemi Anneciğim Diksin
 O Kıymatlı İsmail'e Kendisi Gitsin
-Bağlantı:
+Bağlantı...
 Uyan Uyan Brecerim Senin Olayım
 Ardalar Aldı Ya Nerde Bulayım
 
 Arda Boylarına Ben Kendim Gittim
 Dalgalar Vurdukça Can Teslim Ettim
-Bağlantı:
+Bağlantı...
 Ah Anneciğim Ah Anneciğim Yaktın Ya Beni
 Bu Genç Yaşta Denizlere Attın Ya Beni
 
@@ -138,14 +138,14 @@ Bu Genç Yaşta Denizlere Attın Ya Beni
 "Biz Canları Güle Vermişiz": `Biz Canları Güle Vermişiz
 Külhanları Dile Vermişiz
 Dünya Malın Sele Vermişiz
-Bağlantı:
+Bağlantı...
 Dünya Size Güller Bize
 Dünya Size Haydar Bize
 
 Biz Güllere Pervaneyiz
 Can Ehline Peymaneyiz
 Bülbüllere Biganeyiz
-Bağlantı:
+Bağlantı...
 Dünya Size Güller Bize
 Dünya Size Haydar Bize
 
