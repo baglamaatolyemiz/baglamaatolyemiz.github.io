@@ -417,4 +417,19 @@ Men giderem ırağa
 Bağlantı...
 Gün gördüm günler gördüm
 Seni gördüm şâd oldum`,
+"Madımak Uzar Gider": `Madımak uzar gider
+(Yavrum) yaprağın düzer gider
+O kız yolun şaşırmış
+(Yavrum) inşallah bize gider
+
+Bağlantı...
+(Aman) üç o yandan beş bu yandan
+(Yavrum) zülüf gerdan yaylasından
+
+Madımak destesiyim
+(Yavrum) güzeller hastayım
+Yarimi sıtma tutmuş
+(Yavrum) ben onun ustasıyım
+
+Bağlantı...`,
 };
