@@ -111,18 +111,24 @@
     '<div class="vs"><button type="button" class="pr on">' + PRN + 'Yazdır</button><button type="button" class="cl">' + X + 'Kapat</button></div></div>' +
     '<div class="pg"><img alt=""></div>';
   document.body.append(v);
-  const img = v.querySelector('img'), ck = v.querySelector('.ck'); let pg = {};
-  const pick = k => { ck.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.k === k)); img.src = k === 'sb' && pg.sb ? pg.sb : pg.c; };
+  const img = v.querySelector('img'), ck = v.querySelector('.ck'), pgEl = v.querySelector('.pg'); let pg = [{}], k0 = 'c';
+  // V104 - a book (footer Kitap 1/2/3) is a stack of its pieces' pages in this same window; Renkli / Siyah-beyaz and Yazdır cover every page
+  const ims = () => pgEl.querySelectorAll('img');
+  const pick = k => { k0 = k; ck.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.k === k));
+    ims().forEach((m, i) => { const p = pg[i] || {}; if (p.c) m.src = k === 'sb' && p.sb ? p.sb : p.c; }); };
   ck.querySelectorAll('button').forEach(b => b.onclick = () => pick(b.dataset.k));
   const close = () => { v.hidden = true; document.body.classList.remove('printing'); };
-  // V103 - a whole book (footer Kitap 1/2/3) opens in this same window: the Drive PDF in a frame instead of the page image
-  const fr = document.createElement('iframe'); fr.allow = 'fullscreen'; fr.hidden = true; v.querySelector('.pg').append(fr);
+  // V103 - a book with no pages yet still opens its Drive PDF here, in a frame instead of the page images
+  const fr = document.createElement('iframe'); fr.allow = 'fullscreen'; fr.hidden = true; pgEl.append(fr);
   let book = null;
   const kind = t => v.querySelector('.pn small').textContent = t;
-  window.openPage = (src, name, bw) => { book = null; img.hidden = false; fr.hidden = true; kind('kitap sayfası');
-    pg = { c: src, sb: bw }; v.querySelector('.pn b').textContent = name; img.alt = name;
-    ck.hidden = !bw; pick('c'); v.querySelector('.pg').scrollTop = 0; v.hidden = false; };
-  window.openBook = (id, name) => { book = id; img.hidden = true; fr.hidden = false; ck.hidden = true; kind('kitap');
+  const fill = (pages, name) => { ims().forEach((m, i) => i && m.remove()); pg = pages;
+    pages.slice(1).forEach(() => { const m = document.createElement('img'); m.alt = name; m.decoding = 'async'; fr.before(m); });
+    img.alt = name; ims().forEach(m => m.hidden = false); fr.hidden = true; book = null;
+    v.querySelector('.pn b').textContent = name; ck.hidden = !pages.some(p => p.sb); pick('c'); pgEl.scrollTop = 0; v.hidden = false; };
+  window.openPage = (src, name, bw) => { kind('kitap sayfası'); fill([{ c: src, sb: bw }], name); };
+  window.openBook = (pages, name, id) => { if (pages.length) { kind('kitap'); return fill(pages, name); }
+    book = id; ims().forEach(m => m.hidden = true); fr.hidden = false; ck.hidden = true; kind('kitap');
     if (fr.dataset.id !== id) { fr.src = 'https://drive.google.com/file/d/' + id + '/preview'; fr.dataset.id = id; }
     v.querySelector('.pn b').textContent = name; v.hidden = false; };
   v.querySelector('.cl').onclick = close;
