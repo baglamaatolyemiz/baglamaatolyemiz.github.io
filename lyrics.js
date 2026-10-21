@@ -189,4 +189,21 @@ Yandım Name Gelin
 Bağlantı...
 
 Sadık Ergun-Adnan Şeker · Ankara`,
+"Evlerinin Önü Yoldur": `Evlerinin Önü Yoldur
+Yoldan Geçen Karakoldur
+Kurban Olam Sarı Gelin
+Gel Destini Bizde Doldur
+Bağlantı...
+Al Fadimem Bal Fadimem
+Yanakları Gül Fadimem
+Uyan Uyan Sabah Oldu
+Namazını Kıl Fadimem
+
+Şu Dağların Burcu Musun
+Kız Boynumun Borcu Musun
+Kurban Olam Sarı Gelin
+Sen Çirkinin Harcı Mısın
+Bağlantı...
+
+Metin Avın · Afyon - Emirdağ`,
 };
