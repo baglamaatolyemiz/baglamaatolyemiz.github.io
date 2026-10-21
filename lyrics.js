@@ -323,4 +323,26 @@ Bağlantı:
 Aman benim ipeçim (Aman yele yele lom)
 Derdimi kime dökeyim (Haydi yele yele lom)
 Al yanağın dururken (Aman yele yele lom)`,
+"Bir Alçacık Gügem Dalı": `Bir alçacık gügem dalı
+Kır dalı bin yukarı
+Senin gibi (Aman) bir çapkına
+Kim verir iki karı
+
+Bağlantı:
+Ah leylom yandım (Aman) leylom
+Dağlar dumandır leylom
+Ah leylom yandım (Aman) leylom
+Halim yamandır leylom
+
+Bahçelerde (Aman) koca pazı
+Ne zaman yetişecek
+Senin o insafsız baban
+Ne zaman iyleşecek
+Bağlantı: . . .
+
+Akşam oldu (Aman) mumlar yandı
+Bizim ağa gelecek
+Şu benim huysuz kaynanam
+Çin atına binecek
+Bağlantı: . . .`,
 };
