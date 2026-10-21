@@ -166,4 +166,27 @@ Tiren De Yolları Kalabalık (Naciye'm)
 Gel Gir Koluma
 
 Selim Önder · Tokat`,
+"Evleri Var Engin": `Evleri Var Engin
+Babası Var Zengin
+Name Benim Dengim
+Yandım Name Gelin
+Bağlantı...
+Gelin Gelin Gelin
+Öldüm Name Gelin
+Bir Tomurcuk Gül İken
+Soldum Name Gelin
+
+Kaşlarında Rastık
+Baş Altında Yastık
+Name İle Küstük
+Yandım Name Gelin
+Bağlantı...
+
+Evleri Benzer Hana
+Gözleri Benzer Cama
+Mail Oldum Sana
+Yandım Name Gelin
+Bağlantı...
+
+Sadık Ergun-Adnan Şeker · Ankara`,
 };
