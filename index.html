@@ -142,6 +142,10 @@
   .q .qt{font-style:italic;font-size:12pt;color:#2a3352}
   .qk{display:inline-flex;gap:6px;margin-left:4px}
   .qk em{font-style:normal;font-size:9.5pt;font-weight:600;color:#0141ee;border:1px solid #a0bafa;background:#eff5fe;border-radius:6px;padding:0 8px;line-height:20px}
+  /* V93 - footer books as PDF buttons, same look as the song's PDF button (.pdfb) */
+  .qk em.pdfk{display:inline-flex;align-items:center;gap:6px;color:#b31616;border-color:#f3c4c4;background:#fff;border-radius:8px;padding:2px 10px 2px 6px;line-height:18px;box-shadow:0 2px 6px rgba(226,59,59,.12)}
+  .qk em.pdfk svg{width:14px;height:17px;flex:none}
+  .qk em.pdfk:hover{background:#fff4f4;border-color:#e23b3b}
 
   /* book switch (desktop only) */
   .seg{display:none}
@@ -808,7 +812,9 @@ const Q = D.quote;
 const qm = Q ? Q.t.replace(/ /g, ' ').match(/^(.*?)\s*((?:K\d+\s*)*)$/) : null;
 const qh = qm ? '<span class="qt">“' + esc(qm[1].trim()) + '”</span>' : '';
 // V85 - K01-K03 sit in the right footer card; a click still plays the quote video
-if (qm && qm[2].trim()) $('qk').innerHTML = qm[2].trim().split(/\s+/).map(k => '<em>' + esc(k) + '</em>').join('');
+// V93 - K01 -> "Kitap 1" with the PDF icon
+const pdfIco = '<svg viewBox="0 0 24 28" aria-hidden="true"><path d="M3 1h12l6 6v19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" fill="#fff" stroke="#e23b3b" stroke-width="1.6"/><path d="M15 1v6h6" fill="#fde2e2" stroke="#e23b3b" stroke-width="1.6" stroke-linejoin="round"/><rect x="0" y="13" width="19" height="9" rx="2" fill="#e23b3b"/><text x="9.5" y="20.2" font-size="6.6" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">PDF</text></svg>';
+if (qm && qm[2].trim()) $('qk').innerHTML = qm[2].trim().split(/\s+/).map(k => '<em class="pdfk">' + pdfIco + esc(k.replace(/^K0*(\d+)$/, 'Kitap $1')) + '</em>').join('');
 if (Q) $('quote').innerHTML = Q.id ? '<button class="q" id="qa" title="Videoyu izle"><i>▶</i>' + qh + '</button>' : '<div class="q">' + qh + '</div>';
 if (Q && Q.id) { $('qa').onclick = playQuote; $('qk').onclick = playQuote; $('qk').title = 'Videoyu izle'; $('qk').style.cursor = 'pointer'; }
 renderList();
