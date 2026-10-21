@@ -303,4 +303,24 @@ Kumru gibi gökyüzünde dönende
 Baykuş gibi viran yurda konanda
 Çok ağladım Ferhat gibi çöllerde
 Şirin gibi zülf-ü yardan ayrıldım`,
+"Ben Bir Yeşil Fenerim": `Ben bir yeşil fenerim (Aman yele yele lom)
+Hem yanar hem sönerim (Haydi yele yele lom)
+Ben nişanlı değilim (Aman yele yele lom)
+Kime olsa dönerim (Haydi yele yele lom)
+
+Bağlantı:
+Aman benim ipeçim (Aman yele yele lom)
+Derdimi kime dökeyim (Haydi yele yele lom)
+Al yanağın dururken (Aman yele yele lom)
+Yâr nerenden öpeyim (Haydi yele yele lom)
+
+Kabağın kökeniyim (Aman yele yele lom)
+Ucunun dökeniyim (Haydi yele yele lom)
+Ben güzele varacam (Aman yele yele lom)
+Çirkine tövbeliyim (Haydi yele yele lom)
+
+Bağlantı:
+Aman benim ipeçim (Aman yele yele lom)
+Derdimi kime dökeyim (Haydi yele yele lom)
+Al yanağın dururken (Aman yele yele lom)`,
 };
