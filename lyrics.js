@@ -222,4 +222,20 @@ Harmanı Kaldırdım Kız Senin İçin (Kız Senin İçin)
 Bağlantı...
 
 Hidayet Çalbudak · Afyon`,
+"Bir Şafaktan Bir Şafağa": `Bir şafaktan bir şafağa
+Bir akşamdan bir akşama
+Merhaba demeden daha
+Bu gitmeler gitme değil
+
+Eğil salkım söğüt eğil
+Bu benimki sevda değil
+Eğil yağmur rüzgar eğil
+Bu benimki sevda değil
+
+Eğil dalga bükül demir
+Güzelliğin gerçek değil
+Pencerem kör kapım kitli
+Bu bendeki seyir değil
+
+Ahmet Çuhan`,
 };
