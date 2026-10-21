@@ -277,4 +277,21 @@ Mahmur gözler süzülsün
 
 Ben halayın başıyam (le leyi)
 İncili küpe taşıyam`,
+"Divane Aşık Gibi": `Divane aşık gibi de
+Dolaşırım yollarda
+Kız senin sebebune
+Kaldım İstanbullarda
+(Kaldım İstanbul)
+
+Yüksek dağın kuşiyum da
+Selviye konacağum
+İste beni babamdan
+Vermezse kaçacağum
+(Vermezse kaça)
+
+Al şalım yeşil şalım da
+Dağları dolaşalım
+Sen yağmur ol ben bulut
+Maçka da buluşalım
+(Maçka da bulu)`,
 };
