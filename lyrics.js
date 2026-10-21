@@ -432,4 +432,22 @@ Yarimi sıtma tutmuş
 (Yavrum) ben onun ustasıyım
 
 Bağlantı...`,
+"Gökyüzünde Asılıdır Zembilim": `(Of oof.) Gökyüzünde asılıdır zembilim
+Kız kölen olayım halim sen bilin (aman)
+
+Bağlantı...
+Amanın mineler
+Un eler dönerler
+Amanın güzeller
+Bade süzerler
+
+(Of oof.) Ahdım olsun konuşmayım kızınan
+Yaktı beni edayınan nazınan (aman)
+
+Bağlantı...
+
+(Of oof.) Öte dönder ben görmeyim yüzünü
+Duydum yalanını tutmam sözünü (aman)
+
+Bağlantı...`,
 };
