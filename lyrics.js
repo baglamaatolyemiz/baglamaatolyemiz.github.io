@@ -365,4 +365,38 @@ Sallasana sallasana mendilini
 Akşam oldu göndersene sevdiğimi
 Sallasana sallasana saçlarını
 Akşam olsun söyleyeyim suçlarını`,
+"Bir Daracık Pencere": `Bir daracık pencere
+El vurmayın incire
+Zalım baban duyarsa (kız)
+Bizi vurur zencire
+Aman aman aman aman
+
+Bağlantı...
+Öldürdün beni aman
+Yandırdın beni aman
+Mahvettin beni aman aman aman
+
+Elim deydi eline
+Mail oldum diline
+Dünyayı ben değişmem (oy)
+Saçının bir teline
+Aman aman aman aman
+
+Bağlantı...
+
+Her ayın her gününde
+Her yılın her ayında
+Günde bir kerpiç düşer
+Gönlümün sarayından (oy)
+Aman aman aman aman
+
+Bağlantı...
+
+Keman mıdır yay mıdır
+Güneş midir ay mıdır
+Zülfüne bend olmuşum (oy)
+Ayrılmak kolay mıdır
+Aman aman aman aman
+
+Bağlantı...`,
 };
