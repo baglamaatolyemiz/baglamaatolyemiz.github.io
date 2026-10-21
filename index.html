@@ -569,6 +569,7 @@
 <script src="lyrics.js?v=122"></script>
 <script src="notes.js?v=122"></script>
 <script src="tools.js?v=109"></script>
+<script src="books.js?v=123"></script>
 <script>
 const D = window.DATA;
 let g = 0, cur = null, q = '';
@@ -828,8 +829,10 @@ const bookPages = nm => { const L = D.groups[g].levels.find(l => l.name === 'K' 
   return L ? L.items.map(x => { const n = split(x.t)[1], S = N[L.name + ' ' + n] || N[n]; return S && S.page && !seen.has(S.page) && seen.add(S.page) ? [{ c: S.page, sb: S.pageBW }].concat(S.page2 ? [{ c: S.page2, sb: S.pageBW2 }] : []) : []; }).flat() : []; };  // V109 - page2
 // V103 - Kitap 1/2/3 open the book in the kitap sayfası window, not in the video
 // V112 - a book with no piece pages yet shows the scanned book (34 pages) in the same view, not the Drive frame
+// V123 - a book listed in books.js opens the pages of its merged PDF (notes/kitap-N/), in its order
+const pdfPages = (nm, B) => Array.from({ length: B.n }, (_, i) => { const s = 'notes/kitap-' + nm.replace(/\D/g, '') + '/sayfa-' + String(i + 1).padStart(2, '0'); return { c: s + '.jpg?v=' + B.v, sb: s + '-sb.jpg?v=' + B.v }; });
 const scanPages = Array.from({ length: 34 }, (_, i) => { const s = 'notes/kitap-tarama/sayfa-' + String(i + 1).padStart(2, '0') + '.jpg'; return { c: s, sb: s }; });
-if (Q && Q.id) { $('qk').onclick = e => { const k = e.target.closest('.pdfk'); if (k) { const p = bookPages(k.lastChild.textContent); openBook(p.length ? p : scanPages, k.lastChild.textContent, Q.id); } }; $('qk').title = 'Kitabı aç'; $('qk').style.cursor = 'pointer'; }
+if (Q && Q.id) { $('qk').onclick = e => { const k = e.target.closest('.pdfk'); if (k) { const nm = k.lastChild.textContent, B = (window.BOOKS || {})[nm], p = B ? pdfPages(nm, B) : bookPages(nm); openBook(p.length ? p : scanPages, k.lastChild.textContent, Q.id); } }; $('qk').title = 'Kitabı aç'; $('qk').style.cursor = 'pointer'; }
 renderList();
 idle();
 // V17 - desktop: Uzun/Kısa Sap + search sit in the header's left card, the list gets their row
