@@ -206,4 +206,20 @@ Sen Çirkinin Harcı Mısın
 Bağlantı...
 
 Metin Avın · Afyon - Emirdağ`,
+"Karahisar Kalesi": `Karahisar Kalesi Yıkılır Gelir
+Kakülü Boynuna Dökülür Gelir (Dökülür Gelir)
+Bağlantı:
+Yayladan Gel Allı Gelin Yayladan
+Kesme Ümidini Kadir Mevladan (Kadir Mevladan)
+Ver Elini Karlı Dağlar Aşalım Bayramlaşalım
+
+Sen Bir Koyun Olaydın Ben De Bir Kuzu
+Meleye Meleye Getirem Yazı (Getirem Yazı)
+Bağlantı...
+
+Kapıma Bağladım Da Kınalı Koçu
+Harmanı Kaldırdım Kız Senin İçin (Kız Senin İçin)
+Bağlantı...
+
+Hidayet Çalbudak · Afyon`,
 };
