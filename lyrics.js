@@ -238,4 +238,32 @@ Pencerem kör kapım kitli
 Bu bendeki seyir değil
 
 Ahmet Çuhan`,
+"Gurbette Ömrüm Geçecek": `Gurbette ömrüm geçecek
+Bir daracık yerim de yok
+Oturup derdim dökecek
+Bir vefalı yarim de yok
+
+Bağlantı:
+(Aman aman aman aman (2)
+Bir vefalı yarim de yok)
+
+Gönlüm bir güzele düştü
+Sarfedecek malım da yok
+Özendim derviş olmaya
+Hırka ile şalım da yok
+
+Bağlantı:
+(Aman aman aman aman (2)
+Hırka ile şalım da yok)
+
+Diyorlar ki dünya fani
+Toprak emer tatlı canı
+Hastalandım ilaç hani
+Bir acısız ölüm de yok
+
+Bağlantı:
+(Aman aman aman aman (2)
+Bir acısız ölüm de yok)
+
+Karacaoğlan`,
 };

@@ -126,7 +126,7 @@
     pages.slice(1).forEach(() => { const m = document.createElement('img'); m.alt = name; m.decoding = 'async'; fr.before(m); });
     img.alt = name; ims().forEach(m => m.hidden = false); fr.hidden = true; book = null;
     v.querySelector('.pn b').textContent = name; ck.hidden = !pages.some(p => p.sb); pick('c'); pgEl.scrollTop = 0; v.hidden = false; };
-  window.openPage = (src, name, bw) => { kind('kitap sayfası'); fill([{ c: src, sb: bw }], name); };
+  window.openPage = (src, name, bw, src2, bw2) => { kind('kitap sayfası'); fill([{ c: src, sb: bw }].concat(src2 ? [{ c: src2, sb: bw2 }] : []), name); };  // V109 - a 2-page song opens both
   window.openBook = (pages, name, id) => { if (pages.length) { kind('kitap'); return fill(pages, name); }
     book = id; ims().forEach(m => m.hidden = true); fr.hidden = false; ck.hidden = true; kind('kitap');
     if (fr.dataset.id !== id) { fr.src = 'https://drive.google.com/file/d/' + id + '/preview'; fr.dataset.id = id; }
