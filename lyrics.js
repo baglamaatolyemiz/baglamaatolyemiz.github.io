@@ -150,4 +150,20 @@ Dünya Size Güller Bize
 Dünya Size Haydar Bize
 
 Aşık Süleyman Fahri · Sivas - Kangal`,
+"Çamlar Altında": `Çamlar Altına (aman aman)
+Çamlar Altına
+Giyin De Kuşan (gel Naciye'm)
+Güller Altına
+
+Mavi De Destim Var (aman aman)
+Mavi De Destim Var
+Çok Sallanma (Hovarda Naciye'm)
+Benim De Dostum Var
+
+Tiren De Yoluna (aman aman)
+Tiren De Yoluna
+Tiren De Yolları Kalabalık (Naciye'm)
+Gel Gir Koluma
+
+Selim Önder · Tokat`,
 };
