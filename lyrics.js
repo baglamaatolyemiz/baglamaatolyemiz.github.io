@@ -345,4 +345,24 @@ Bizim ağa gelecek
 Şu benim huysuz kaynanam
 Çin atına binecek
 Bağlantı: . . .`,
+"Bir Dalda İki Kiraz": `Bir dalda iki kiraz
+Biri al biri beyaz
+Eğer beni seversen
+Mektubunu sıkça yaz
+
+Bir dalda iki ceviz
+Aramız derya deniz
+Sen orada ben burda
+Ne bet kaldı ne beniz
+
+Bir dalda iki elma
+Birin al birin alma
+Kurban olduğum Allah
+Canım al yarim alma
+
+Bağlantı...
+Sallasana sallasana mendilini
+Akşam oldu göndersene sevdiğimi
+Sallasana sallasana saçlarını
+Akşam olsun söyleyeyim suçlarını`,
 };
