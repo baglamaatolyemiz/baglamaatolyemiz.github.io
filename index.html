@@ -564,7 +564,7 @@
 <script src="data.js?v=49"></script>
 <script src="media.js"></script>
 <script src="lyrics.js?v=87"></script>
-<script src="notes.js?v=94"></script>
+<script src="notes.js?v=96"></script>
 <script src="tools.js?v=40"></script>
 <script>
 const D = window.DATA;
@@ -640,7 +640,7 @@ function notes(name, msg, key){
     $('nt').firstChild.onclick = () => window.openPage && openPage(S.page, name, S.pageBW); }
   if (!S) { $('sheet').innerHTML = '<div class="ph">' + msg + '</div>'; sap(); return; }
   // V25 - one group (A, B, C ...) at a time; the letters on the right turn the page
-  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=94" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
+  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=96" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
     '<div class="grp-nav">' + S.groups.map(k => '<button data-k="' + k + '">' + k + '</button>').join('') + '</div>';
   const go = k => { $('sheet').querySelectorAll('[data-k]').forEach(e => e.tagName === 'IMG' ? e.hidden = e.dataset.k !== k : e.classList.toggle('on', e.dataset.k === k)); sap(S, k);
     // V40 - many groups: the list starts at the top (A) and slides down with the active letter
@@ -832,6 +832,29 @@ const placeBar = () => {
 };
 deskMQ.addEventListener('change', placeBar); placeBar();
 document.documentElement.classList.remove('ld'); // V68
+// V96 - live update: a new deploy writes version.json; the page reloads by itself and comes back to the same piece,
+// video time and scroll. It never cuts a playing video: it waits until the video is paused or over.
+(() => { const K = 'bgLive';
+  try { const s = JSON.parse(sessionStorage.getItem(K) || 'null'); sessionStorage.removeItem(K);
+    if (s && Date.now() - s.at < 120000) {
+      if (D.groups[s.g]) { g = s.g; renderList(); }
+      const L = s.li != null && D.groups[g].levels[s.li], x = L && L.items[s.ii];
+      if (x) { play({ ...x, li: s.li, ii: s.ii });
+        const seek = (n) => { const v = $('screen').querySelector('video'); if (!v) return n > 0 && setTimeout(() => seek(n - 1), 250);
+          const go = () => { try { v.currentTime = s.t || 0; } catch (e) {} }; v.readyState >= 1 ? go() : v.addEventListener('loadedmetadata', go, { once: true }); };
+        if (s.t) seek(20); }
+      setTimeout(() => window.scrollTo(0, s.y || 0), 300); } } catch (e) {}
+  let ver = null, due = false;
+  const busy = () => { const v = $('screen').querySelector('video'); return v && !v.paused && !v.ended; };
+  const go = () => { if (!due || busy()) return;
+    const v = $('screen').querySelector('video');
+    try { sessionStorage.setItem(K, JSON.stringify({ at: Date.now(), g, li: cur ? cur.li : null, ii: cur ? cur.ii : null, t: v ? v.currentTime : 0, y: window.scrollY })); } catch (e) {}
+    location.reload(); };
+  const check = () => fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+    if (!j || !j.v) return; if (ver === null) ver = j.v; else if (j.v !== ver) { due = true; go(); } }).catch(() => {});
+  check(); setInterval(check, 20000);
+  document.addEventListener('pause', () => setTimeout(go, 500), true); document.addEventListener('ended', go, true);
+})();
 </script>
 </body>
 </html>
