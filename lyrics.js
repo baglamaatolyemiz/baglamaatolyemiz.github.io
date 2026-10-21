@@ -266,4 +266,15 @@ Bağlantı:
 Bir acısız ölüm de yok)
 
 Karacaoğlan`,
+"Hış Hışı Hançer": `Hış hışı hançer boynuma (le leyi)
+Küpeli kızlar yanıma
+
+Ben halayın başıyam (le leyi)
+İncili küpe taşıyam
+
+Çekin halay dizilsin (le leyi)
+Mahmur gözler süzülsün
+
+Ben halayın başıyam (le leyi)
+İncili küpe taşıyam`,
 };
