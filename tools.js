@@ -115,10 +115,20 @@
   const pick = k => { ck.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.k === k)); img.src = k === 'sb' && pg.sb ? pg.sb : pg.c; };
   ck.querySelectorAll('button').forEach(b => b.onclick = () => pick(b.dataset.k));
   const close = () => { v.hidden = true; document.body.classList.remove('printing'); };
-  window.openPage = (src, name, bw) => { pg = { c: src, sb: bw }; v.querySelector('.pn b').textContent = name; img.alt = name;
+  // V103 - a whole book (footer Kitap 1/2/3) opens in this same window: the Drive PDF in a frame instead of the page image
+  const fr = document.createElement('iframe'); fr.allow = 'fullscreen'; fr.hidden = true; v.querySelector('.pg').append(fr);
+  let book = null;
+  const kind = t => v.querySelector('.pn small').textContent = t;
+  window.openPage = (src, name, bw) => { book = null; img.hidden = false; fr.hidden = true; kind('kitap sayfası');
+    pg = { c: src, sb: bw }; v.querySelector('.pn b').textContent = name; img.alt = name;
     ck.hidden = !bw; pick('c'); v.querySelector('.pg').scrollTop = 0; v.hidden = false; };
+  window.openBook = (id, name) => { book = id; img.hidden = true; fr.hidden = false; ck.hidden = true; kind('kitap');
+    if (fr.dataset.id !== id) { fr.src = 'https://drive.google.com/file/d/' + id + '/preview'; fr.dataset.id = id; }
+    v.querySelector('.pn b').textContent = name; v.hidden = false; };
   v.querySelector('.cl').onclick = close;
-  v.querySelector('.pr').onclick = () => { document.body.classList.add('printing'); print(); };
+  // a book prints from its own PDF tab (a Drive frame cannot be printed from here)
+  v.querySelector('.pr').onclick = () => { if (book) return window.open('https://drive.google.com/file/d/' + book + '/view', '_blank', 'noopener');
+    document.body.classList.add('printing'); print(); };
   addEventListener('afterprint', () => document.body.classList.remove('printing'));
   v.onclick = e => { if (e.target === v || e.target.classList.contains('pg')) close(); };
   addEventListener('keydown', e => { if (e.key === 'Escape' && !v.hidden) close(); });
