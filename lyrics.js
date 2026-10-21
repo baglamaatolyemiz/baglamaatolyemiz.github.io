@@ -399,4 +399,22 @@ Ayrılmak kolay mıdır
 Aman aman aman aman
 
 Bağlantı...`,
+"Altın Hızma Mülayim": `Altun hızma mülayim
+Seni haktan dileyim
+Yaz günü temmuz da
+Sen terle men sileyim
+
+Altun hızma incidi
+Gömleği nar incidi
+Menim lal olmuş dilim
+Ne dedi yar incidi
+
+Altun hızmav tomağa
+Yanaşıp al yanağa
+Güzel gel görüşelim
+Men giderem ırağa
+
+Bağlantı...
+Gün gördüm günler gördüm
+Seni gördüm şâd oldum`,
 };
