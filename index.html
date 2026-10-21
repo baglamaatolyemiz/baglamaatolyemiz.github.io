@@ -826,7 +826,9 @@ if (Q) $('quote').innerHTML = Q.id ? '<button class="q" id="qa" title="Videoyu i
 const bookPages = nm => { const L = D.groups[g].levels.find(l => l.name === 'K' + String(nm.replace(/\D/g, '')).padStart(2, '0')), seen = new Set();
   return L ? L.items.map(x => { const n = split(x.t)[1], S = N[L.name + ' ' + n] || N[n]; return S && S.page && !seen.has(S.page) && seen.add(S.page) ? [{ c: S.page, sb: S.pageBW }].concat(S.page2 ? [{ c: S.page2, sb: S.pageBW2 }] : []) : []; }).flat() : []; };  // V109 - page2
 // V103 - Kitap 1/2/3 open the book in the kitap sayfası window, not in the video
-if (Q && Q.id) { $('qa').onclick = playQuote; $('qk').onclick = e => { const k = e.target.closest('.pdfk'); if (k) openBook(bookPages(k.lastChild.textContent), k.lastChild.textContent, Q.id); }; $('qk').title = 'Kitabı aç'; $('qk').style.cursor = 'pointer'; }
+// V112 - a book with no piece pages yet shows the scanned book (34 pages) in the same view, not the Drive frame
+const scanPages = Array.from({ length: 34 }, (_, i) => { const s = 'notes/kitap-tarama/sayfa-' + String(i + 1).padStart(2, '0') + '.jpg'; return { c: s, sb: s }; });
+if (Q && Q.id) { $('qa').onclick = playQuote; $('qk').onclick = e => { const k = e.target.closest('.pdfk'); if (k) { const p = bookPages(k.lastChild.textContent); openBook(p.length ? p : scanPages, k.lastChild.textContent, Q.id); } }; $('qk').title = 'Kitabı aç'; $('qk').style.cursor = 'pointer'; }
 renderList();
 idle();
 // V17 - desktop: Uzun/Kısa Sap + search sit in the header's left card, the list gets their row
