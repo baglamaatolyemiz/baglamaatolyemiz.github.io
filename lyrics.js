@@ -294,4 +294,13 @@ Dağları dolaşalım
 Sen yağmur ol ben bulut
 Maçka da buluşalım
 (Maçka da bulu)`,
+"Değmen Benim Gamlı Yaslı Gönlüme": `Değmen benim gamlı yaslı gönlüme
+Ben bir selvi boylu yardan ayrıldım
+Evvel bağban idim dostun bağında
+Talan vurdu ayva nardan ayrıldım
+
+Kumru gibi gökyüzünde dönende
+Baykuş gibi viran yurda konanda
+Çok ağladım Ferhat gibi çöllerde
+Şirin gibi zülf-ü yardan ayrıldım`,
 };
