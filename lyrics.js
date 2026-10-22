@@ -450,4 +450,26 @@ Bağlantı...
 Duydum yalanını tutmam sözünü (aman)
 
 Bağlantı...`,
+"Asmalıdır Evimiz": `Asmalıdır evimiz (leylim yâr)
+Yeni düştü sevimiz (leylim yâr)
+Sevda böyle giderse (leylim yâr)
+Çatlar ölür birimiz (leylim yâr)
+
+Bağlantı...
+Leylim leylim leylolsun (leylim yâr)
+Her gün akşam böylolsun (leylim yâr)
+
+Kaleden iniyorum (leylim yâr)
+Dön desen dönüyorum (leylim yâr)
+Aşkından kibrit oldum (leylim yâr)
+Üflesen yanıyorum (leylim yâr)
+
+Bağlantı...
+
+Karanfilim sarkarım (leylim yâr)
+Açılmaya korkarım (leylim yâr)
+Yâr geliyor deseler (leylim yâr)
+Hasta olsam kalkarım (leylim yâr)
+
+Bağlantı...`,
 };
