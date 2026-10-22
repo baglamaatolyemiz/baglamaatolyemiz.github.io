@@ -550,4 +550,17 @@ Yataklar diken oldu
 Senden ayrı yatalı
 
 Bağlantı...`,
+"Üsküdar’a Giderken": `Üsküdar'a gider iken aldı da bir yağmur
+Katibimin setresi uzun eteği çamur
+Katip uykudan uyanmış gözleri mahmur
+
+Bağlantı...
+Katip benim ben katibin el ne karışır
+Katibime kolalı da gömlek ne güzel yaraşır
+
+Üsküdar'a gider iken bir mendil buldum
+Mendilimin içine lokum doldurdum
+Ben katibi arar iken yanımda buldum
+
+Bağlantı...`,
 };
