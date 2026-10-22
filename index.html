@@ -781,7 +781,7 @@ function ek(L, q){
 function renderList(){
   const G = D.groups[g];
   $('gsw').innerHTML = D.groups.map((x, i) => '<button class="' + (i === g ? 'on' : '') + '" data-g="' + i + '">' + x.name + '</button>').join('');
-  $('seg').innerHTML = G.levels.map((L, li) => '<button class="' + (open.has(li) ? 'on' : '') + '" data-l="' + li + '">' + book(L.name) + '<em>' + L.items.filter(x => x.id).length + ' / ' + L.items.length + '</em></button>').join('');
+  $('seg').innerHTML = G.levels.map((L, li) => '<button class="' + (open.has(li) ? 'on' : '') + '" data-l="' + li + '">' + book(L.name) + '<em>' + L.items.filter(x => x.id).length + ' / ' + new Set(L.items.map(x => x.t.split('.')[0])).size + '</em></button>').join(''); // V139 - same-numbered entries (two takes of one piece) count once
   $('mods').classList.toggle('q', !!q);
   $('grp').innerHTML = D.groups.map((x, i) => '<button class="' + (i === g ? 'on' : '') + '" data-g="' + i + '">' + x.name + '</button>').join('');
   const all = G.levels.flatMap(L => L.items);
