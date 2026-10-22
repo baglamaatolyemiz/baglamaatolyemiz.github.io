@@ -526,4 +526,28 @@ Terzilerde makine (yâr yandım ben yandım)
 Kalk gidelim hakime (yandım gülü bir tanem)
 
 Bağlantı...`,
+"Ben Giderim Batum’a": `Ben giderim Batum'a
+Batum'un batağına
+Bahçenizden içeri
+Al beni otağına
+
+Bağlantı...
+Nazlı yarim geldim sana
+Fistanını toplasana
+Kemençeler çalınıyor
+Bize horon oynasana
+
+Bıldırcınım uçuyor
+Kanadını açıyor
+Bıldır ki sevdiceğim
+Bu yıl benden kaçıyor
+
+Bağlantı...
+
+Köşke serdim yatağı
+Gel derdimin ortağı
+Yataklar diken oldu
+Senden ayrı yatalı
+
+Bağlantı...`,
 };
