@@ -566,8 +566,8 @@
 <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.min.js"></script>
 <script src="data.js?v=49"></script>
 <script src="media.js"></script>
-<script src="lyrics.js?v=129"></script>
-<script src="notes.js?v=129"></script>
+<script src="lyrics.js?v=130"></script>
+<script src="notes.js?v=130"></script>
 <script src="tools.js?v=109"></script>
 <script src="books.js?v=123"></script>
 <script>
@@ -644,7 +644,7 @@ function notes(name, msg, key){
     $('nt').firstChild.onclick = () => window.openPage && openPage(S.page, name, S.pageBW, S.page2, S.pageBW2); }
   if (!S) { $('sheet').innerHTML = '<div class="ph">' + msg + '</div>'; sap(); return; }
   // V25 - one group (A, B, C ...) at a time; the letters on the right turn the page
-  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=129" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
+  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=130" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
     '<div class="grp-nav">' + S.groups.map(k => '<button data-k="' + k + '">' + k + '</button>').join('') + '</div>';
   const go = k => { $('sheet').querySelectorAll('[data-k]').forEach(e => e.tagName === 'IMG' ? e.hidden = e.dataset.k !== k : e.classList.toggle('on', e.dataset.k === k)); sap(S, k);
     // V40 - many groups: the list starts at the top (A) and slides down with the active letter

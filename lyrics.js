@@ -510,4 +510,20 @@ Manda yuva yapmış söğüt dalına (aman aman)
 Yavrusunu sinek kapmış (amanın yandım)
 
 Bağlantı...`,
+"Bağa Vardım Nar İçin": `Bağa vardım nar için (yâr yandım ben yandım)
+Gül kopardım yar için (yandım gülü bir tanem)
+
+Bağlantı...
+El vurma diz kırma yüreğim yaralı
+Beni baştan çıkaran o göz karalı
+
+Bağa vardım budanmış (yâr yandım ben yandım)
+Bağa bülbül dadanmış (yandım gülü bir tanem)
+
+Bağlantı...
+
+Terzilerde makine (yâr yandım ben yandım)
+Kalk gidelim hakime (yandım gülü bir tanem)
+
+Bağlantı...`,
 };
