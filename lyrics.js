@@ -491,4 +491,23 @@ Ilgar bizi neylesin (aman aman)
 (Haydi) sarılalım kızlara (aman)
 
 Bağlantı...`,
+"Aşağıdan Geliyor Türkmen Goyunu": `Aşağıdan geliyor Türkmen goyunu (aman aman)
+Selviye benzettim yarin boyunu (amanın yandım)
+
+Bağlantı...
+Amanın amanın amanın yandım
+Tiridine tiridine bandım
+Bedava mı sandın, para vidim aldım
+Tiridine tiridine tiridine bandım
+Bedava mı sandın, para vidim aldım
+
+Sabahleyin erken çifte giderken (aman aman)
+Öküzüm torbadan düştü (amanın yandım)
+
+Bağlantı...
+
+Manda yuva yapmış söğüt dalına (aman aman)
+Yavrusunu sinek kapmış (amanın yandım)
+
+Bağlantı...`,
 };
