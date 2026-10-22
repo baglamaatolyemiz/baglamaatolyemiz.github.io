@@ -195,6 +195,8 @@
     .lyr{width:fit-content;max-width:calc(var(--gw,260px) - 48px)} .lyr.two{width:calc(var(--gw,260px) - 48px)}
     /* V62 - the lyric block centred in the frame by its widest stanza, lines left-aligned; a lone closing line centred */
     .lyr{width:calc(var(--gw,260px) - 48px)} .lyr p.cr{text-align:center}
+    /* V142 - two columns keep every line whole; the type shrinks instead of the line breaking */
+    .lyr.two{white-space:nowrap} .lyr.two span{padding-right:0}
     /* V23 - left logo framed like the right one */
     .lbox.l{left:var(--gl,0)}
     /* V26 - perde haritasi: the sap in the left frame, the perdes of the shown group lit */
@@ -720,7 +722,7 @@ function lyrics(t){
   const L = (window.LYRICS || {})[t], el = $('lyr');
   el.hidden = !L; el.classList.remove('sync');
   // optional LRC time tag per line: "[1:23] line" or "[1:23.5] line"
-  el.innerHTML = L ? L.trim().split(/\n\s*\n/).map(v => v.split('\n').filter(ln => !/^\s*Bağlantı/.test(ln))).filter(v => v.length).map(v => '<p>' + v.map(ln => { // V141 - "Bağlantı..." lines are for the PDF only, not shown on the site
+  el.innerHTML = L ? L.trim().split(/\n\s*\n/).map(v => v.split('\n').filter(ln => !/^\s*Bağlantı/.test(ln)).map(ln => ln.replace(/\s*\(\d\)/g, ''))).filter(v => v.length).map(v => '<p>' + v.map(ln => { // V141 - "Bağlantı..." lines are for the PDF only, not shown on the site
     const m = ln.match(/^\s*\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
     return m ? '<span data-t="' + (+m[1] * 60 + +m[2]) + '">' + esc(m[3]) + '</span>' : '<span' + (/^\s*Bağlantı\.\.\./.test(ln) ? ' class="bag"' : '') + '>' + esc(ln) + '</span>';
   }).join('') + '</p>').join('') : '';
@@ -735,7 +737,8 @@ function lyrics(t){
 function fitLyrics(){
   const el = $('lyr'); if (el.hidden) return;
   const fit = (min) => { let f = 10.5; el.style.fontSize = f + 'pt';
-    const over = () => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;   // columns overflow sideways
+    const over = () => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1   // columns overflow sideways
+      || [...el.querySelectorAll('span')].some(s => s.scrollWidth > s.clientWidth + 1);   // V142 - a whole line wider than its column
     while (over() && f > min) { f -= .25; el.style.fontSize = f + 'pt'; }
     return !over(); };
   el.classList.remove('two');
