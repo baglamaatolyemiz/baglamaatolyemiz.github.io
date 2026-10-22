@@ -472,4 +472,23 @@ Yâr geliyor deseler (leylim yâr)
 Hasta olsam kalkarım (leylim yâr)
 
 Bağlantı...`,
+"Atım Araptır Benim": `Atım araptır benim (aman aman)
+(Aman) yüküm şaraptır benim (vay vay)
+(Haydi) yüküm şaraptır benim (vay vay)
+Bu yıl böyle giderse (aman aman)
+(Aman) halim haraptır benim (canım)
+(Haydi) halim haraptır benim (aman)
+
+Bağlantı...
+Emişim gümüşüm birhoşum aman
+Çokca da içtim serhoşum aman
+
+Atım kara ben kara (aman aman)
+(Aman) kalk gidelim ılgara (vay vay)
+(Haydi) kalk gidelim ılgara (vay vay)
+Ilgar bizi neylesin (aman aman)
+(Aman) sarılalım kızlara (canım)
+(Haydi) sarılalım kızlara (aman)
+
+Bağlantı...`,
 };
