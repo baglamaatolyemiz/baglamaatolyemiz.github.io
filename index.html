@@ -720,7 +720,7 @@ function lyrics(t){
   const L = (window.LYRICS || {})[t], el = $('lyr');
   el.hidden = !L; el.classList.remove('sync');
   // optional LRC time tag per line: "[1:23] line" or "[1:23.5] line"
-  el.innerHTML = L ? L.trim().split(/\n\s*\n/).map(v => '<p>' + v.split('\n').map(ln => {
+  el.innerHTML = L ? L.trim().split(/\n\s*\n/).map(v => v.split('\n').filter(ln => !/^\s*Bağlantı/.test(ln))).filter(v => v.length).map(v => '<p>' + v.map(ln => { // V141 - "Bağlantı..." lines are for the PDF only, not shown on the site
     const m = ln.match(/^\s*\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
     return m ? '<span data-t="' + (+m[1] * 60 + +m[2]) + '">' + esc(m[3]) + '</span>' : '<span' + (/^\s*Bağlantı\.\.\./.test(ln) ? ' class="bag"' : '') + '>' + esc(ln) + '</span>';
   }).join('') + '</p>').join('') : '';
@@ -746,7 +746,8 @@ function fitLyrics(){
   const P = [...el.querySelectorAll('p')], r = document.createRange();
   P.forEach(p => p.classList.toggle('cr', P.length > 1 && p === P[P.length - 1] && p.children.length === 1));
   let w = 0; el.querySelectorAll('p:not(.cr) span').forEach(x => { r.selectNodeContents(x); w = Math.max(w, r.getBoundingClientRect().width); });
-  if (w) el.style.marginLeft = Math.max(0, (el.clientWidth - w) / 2 - 6) + 'px';
+  // V141 - the shift goes on the stanzas only, so the closing credit line stays centred inside the frame instead of being pushed out
+  if (w) P.forEach(p => p.style.marginLeft = p.classList.contains('cr') ? '' : Math.max(0, (el.clientWidth - w) / 2 - 6) + 'px');
 }
 addEventListener('resize', () => fitLyrics());
 function playQuote(){
