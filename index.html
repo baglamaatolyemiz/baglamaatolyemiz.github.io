@@ -153,10 +153,12 @@
   .qk .bkt{display:inline-flex;align-items:center;gap:4px;border:1px solid #e3e6ee;background:#f7f8fb;border-radius:9px;padding:3px}
   /* V153 - Tüm Kitap = a button like Mail / Tasarım (white, own border and shadow); Kitap 1/2/3 = quieter grey-blue part buttons in its tray; no red fill */
   .qk .bkt>em.pdfk{padding:1px 10px 1px 5px;border-radius:7px}
-  .qk .bkp{display:inline-flex;align-items:center;gap:4px;padding:0 2px 0 5px;border-left:1px solid #dde1ea;margin-left:2px}
-  .qk .bkp em.pdfk{font-size:9pt;gap:4px;padding:1px 8px 1px 4px;line-height:16px;border-radius:6px;color:#4a5470;border-color:#dde1ea;background:#fff;box-shadow:0 1px 2px rgba(31,42,68,.08)}
-  .qk .bkp em.pdfk:hover{color:#1f2a44;border-color:#b9c0d0;background:#fff}
-  .qk .bkp em.pdfk svg{width:12px;height:14px}
+  /* V155 - Kitap 1/2/3 in ONE shared frame (no frame per chip), small type, thin dividers between them */
+  .qk .bkp{display:inline-flex;align-items:center;gap:0;margin-left:4px;padding:1px 2px;border:1px solid #dde1ea;border-radius:6px;background:#fff;box-shadow:0 1px 2px rgba(31,42,68,.08)}
+  .qk .bkp em.pdfk{font-size:7.5pt;gap:3px;padding:0 6px 0 4px;line-height:14px;border-radius:4px;color:#4a5470;border:0;background:transparent;box-shadow:none}
+  .qk .bkp em.pdfk+em.pdfk{border-left:1px solid #e6e9f0;border-radius:0}
+  .qk .bkp em.pdfk:hover{color:#1f2a44;background:#f3f5f9}
+  .qk .bkp em.pdfk svg{width:10px;height:12px}
   footer .fe{display:flex;gap:6px;align-items:center} footer .credit .lb{color:#1f2a44} footer .credit a{color:#0141ee;text-decoration:underline;text-underline-offset:2px} footer .credit a:hover{color:#0b1440} /* V95 - mail link classic blue */
   /* V93 - credit in the same pill as the book buttons, no icon */
   footer .credit{font-size:9.5pt;color:#b31616;border:1px solid #f3c4c4;background:#fff;border-radius:8px;padding:2px 10px;line-height:18px;box-shadow:0 2px 6px rgba(226,59,59,.12)}
