@@ -563,4 +563,226 @@ Mendilimin içine lokum doldurdum
 Ben katibi arar iken yanımda buldum
 
 Bağlantı...`,
+// V144 - K01 #08
+"Tren Gelir Hoş Gelir": `Tren gelir hoş gelir (ley ley limi limi ley)
+Odaları boş gelir (mini mini güzel gel bize)
+Duydum yar bize gelir (ley ley limi limi ley)
+Sefa gelir hoş gelir (mini mini güzel gel bize)
+
+Beydağı'na kar yağar (ley ley limi limi ley)
+Kar altında güller var (mini mini güzel gel bize)
+Ben mahleden geçerken (ley ley limi limi ley)
+Pencereden yar bakar (mini mini güzel gel bize)
+
+Adnan Gül · Malatya`,
+// V144 - K01 #09
+"Giderim Bu Düzünen": `Giderim bu düzünen
+(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+Aram yoktur kızınan
+(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+İşte örtülü gülü
+(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+Ne hoş olur sünbülü
+(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+
+Selahattin Yetimoğlu · Erzurum-Şenkaya`,
+// V144 - K01 #10
+"Evleri Görünüyor": `Evleri görünüyor
+Gönüldür yeriniyor (Birdanem)
+Çekilecek dert değil
+Mevlam sabır veriyor (Birdanem)
+
+Evleri karşımızda
+Sevdası başımızda (Birdanem)
+Bu nasıl sevdayımış
+Gencecik yaşımızda (Birdanem)
+
+İbrahim Karataş · Tokat`,
+// V144 - K01 #11
+"Bebek": `Adalardan çıktım yayan
+Di gel bu dertlere dayan
+Emmim atlı dacım yayan
+Nenni nenni nenni nenni
+Nenni nenni nenni bebek oy oy
+
+Bebeğin beşiği çamdan
+Yuvarlandı düştü damdan
+Beybabası gelir Van'dan
+Nenni nenni nenni nenni
+Nenni nenni nenni bebek oy...
+
+Bebeğin beşiği bakır
+Yerinden kalkmıyor ağır
+Ben sallarım tıkır tıkır
+Nenni nenni nenni nenni
+Nenni nenni nenni bebek oy...
+
+Cafer Kırmızı · Erzurum-Pasinler`,
+// V144 - K01 #13
+"Şaha Doğru Giden Kervan": `Şaha doğru giden kervan
+Çok ağlattın güldür beni
+Düşmüşüm elden ayaktan
+Tut elimden kaldır beni
+
+Tut elimden ferman eyle
+Gel bu derde derman eyle
+Götür yare kurban eyle
+Öldür derse öldür beni
+
+Arıydım baldan ayrıldım
+Bir şirin dilden ayrıldım
+Bülbüldüm gülden ayrıldım
+Gülistana kondur beni
+
+Tut elimden düşmeyelim
+Doğru yoldan şaşmayalım
+Derdim çoktur deşmeyelim
+Böyle şaha bildir beni
+
+Hıdır Ersoy · Erzincan - Tercan`,
+// V144 - K01 #14
+"Ne Ağlarsın": `Ne ağlarsın benim zülfü siyahım
+Bu da gelir bu da geçer ağlama
+Göklere erişti figanım ahım
+Bu da gelir bu da geçer ağlama
+
+Bir gülün çevresi dikendir hardır
+Bülbül har elinden ah ile zardır
+Ne olsa da kışın sonu bahardır
+Bu da gelir bu da geçer ağlama
+
+Daimi'yem her can ermez bu sırra
+Gerçek aşık olan erer o nura
+Yusuf sabır ile vardı Mısır'a
+Bu da gelir bu da geçer ağlama
+
+İsmail Daimi · Erzincan-Tercan`,
+// V144 - K01 #15
+"Seherde Bir Bülbül": `Seherde bir bülbül öter yârin bağında
+O kaş o göz o dil o diş gül açmış yanağında
+
+Yanarım ağlarım on üç on dört çağında
+O kaş o göz o dil o diş ballar var dudağında
+
+Gümüşten kemeri incecik bellerinde
+O kaş o göz o dil o diş kına var ellerinde
+
+Cevdet Aslan, İsmet Bozkurt · Erzurum - Şenkaya`,
+// V144 - K01 #17
+"Yavuz Geliyor": `Yavuz geliyor yavuz da
+Denizi yara yara
+Kız ben seni alırım da
+Başına vura vura
+
+Gemim geliyor gemim de
+Vona Burnundan beri
+Kız Allahı seversen de
+At başından çenberi
+
+Ferhat Özyakuboğlu · Karadeniz Bölgesi`,
+// V144 - K01 #18
+"Dere Geliyor Dere": `Dere geliyor dere (Yalelel yalelel)
+Kumunu sere sere (Yalelellim)
+Al dere götür beni (Yalelel yalelel)
+Yarin olduğu yer (Yalelellim)
+
+Bağlantı...
+Amanın aman aman
+Zamanın zaman zaman
+Bizim düğün ne zaman (Yalelellim)
+
+Ben armudu dişledim (Yalelel yalelel)
+Sapını gümüşledim (Yalelellim)
+Sevdiğimin ismini (Yalelel yalelel)
+Mendilime işledim (Yalelellim)
+
+Bağlantı...
+Amanın aman aman
+Zamanın zaman zaman
+Bizim düğün ne zaman (Yalelellim)
+
+Türkan Ebcioğlu · Edirne-Lüleburgaz`,
+// V144 - K01 #19
+"Suda Balık Yan Gider": `Suda balık yan gider
+(Yandım amman amman amman)
+Açma yaram kan gider
+(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+Buna tabip neylesin
+(Yandım amman amman amman)
+Ecel gelmiş can gider
+(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+
+Su başı duman oldu
+(Yandım amman amman amman)
+Hallerim yaman oldu
+(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+Bana dert açan güzel
+(Yandım amman amman amman)
+Ellere derman oldu
+(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+
+Hayriye Temizkalp · Erzurum`,
+// V144 - K01 #20
+"Yenice Yolları": `Yenice yolları bükülür gider
+Zülüf ak gerdana dökülür gider
+Yiğidin sevdiği güzel olursa
+Ömrü arkasından sökülür gider
+
+Kırmızı gül olsan har olamazsın
+Azrail olsan da can alamazsın
+Dünyayı kalbura koysan elesen
+Sen de benim gibi yar bulamazsın
+
+Aziz Şenses · Adana`,
+// V144 - K01 #22
+"İşte Gidiyorum Çeşmi Siyahım": `İşte gidiyorum çeşm-i siyahım
+Aramıza dağlar sıralansa da
+Sermayem derdimdir servetim ahım
+Karardıkça bahtım karalansa da
+
+Haydi dolaşalım yüce dağlarda
+Dost beni bıraktı ah ile zarda
+Ötmek istiyorum viran bağlarda
+Ayağıma cennet kiralansa da
+
+Bağladım canımı zülfün teline
+Sen beni düşürdün elin diline
+Güldün Mahzuni'nin berbat haline
+Mervan'ın elinde parelense de
+
+Mahzuni Şerif`,
+// V144 - K01 #24
+"Çanakkale İçinde": `Çanakkale içinde aynalı çarşı
+Ana ben gidiyom düşmana karşı
+(Of... gençliğim eyvah)
+
+Çanakkale içinde bir uzun selvi
+Kimimiz nişanlı kimimiz evli
+(Of... gençliğim eyvah)
+
+Çanakkale içinde vurdular beni
+Ölmeden mezara koydular beni
+(Of... gençliğim eyvah)
+
+Çanakkale içinde bir dolu testi
+Analar babalar mektubu kesti
+(Of... gençliğim eyvah)
+
+İhsan Ozanoğlu · Kastamonu`,
+// V144 - K01 #25
+"Yaylanın Çimenine": `Yaylanın çimenine
+Kuzu yayılır kuzu
+Gün de bugünkü gündür
+Sallan yosmanın kızı
+
+Asmadan gel asmadan
+Fistan giymiş basmadan
+Gel gidelim sevdiğim
+Devriyeler basmadan
+
+Bağlantı...
+Aman kızı, çaçan kızı
+Sen allar giy ben kırmızı
+Çıkalım dağların başına
+Sen gül topla ben nergizi`,
 };
