@@ -151,10 +151,11 @@
   // İçindekiler: Tüm Kitap page 2
   const go = (i, h) => { const t = tgt(i, h); if (t == null) return;
     if (h !== 1 && t >= at.p0 && t < at.p0 + pg.length) return scrollTo(t - at.p0);
-    if (h === 1) return openKey('Tüm Kitap', t);
+    const pre = /^Kısa Sap /.test(at.b || '') ? 'Kısa Sap ' : '';   // V162 - a Kısa Sap book stays in its own edition
+    if (h === 1) return openKey(pre + 'Tüm Kitap', t);
     const B = NV().books, pc = at.pc && NV().pieces.find(x => t >= x.p0 && t < x.p0 + x.n);
     if (pc) return openPiece(pc, t);
-    openKey(Object.keys(B).find(k => k !== 'Tüm Kitap' && !at.pc && t >= B[k].p0 && t < B[k].p0 + B[k].n) || 'Tüm Kitap', t); };
+    openKey(Object.keys(B).find(k => k.replace(/Kitap \d+$/, '') === pre && !at.pc && t >= B[k].p0 && t < B[k].p0 + B[k].n) || pre + 'Tüm Kitap', t); };
   pgEl.addEventListener('click', e => { const h = e.target.closest('.hs'); if (!h) return; e.preventDefault(); e.stopPropagation(); go(+h.dataset.i, +h.dataset.h); });
   window.openPage = (src, name, bw, src2, bw2) => { kind('kitap sayfası'); const P = [{ c: src, sb: bw }].concat(src2 ? [{ c: src2, sb: bw2 }] : []),   // V109 - a 2-page song opens both
     pc = NV().pieces[NV().page[((src || '').match(/notes\/([^/]+)\//) || [])[1]]]; fill(P, name, pc && aPiece(pc, P.length === pc.n)); };
