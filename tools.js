@@ -106,14 +106,15 @@
   const PDF = '<svg viewBox="0 0 24 28" aria-hidden="true"><path d="M3 1h12l6 6v19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" fill="#fff" stroke="#e23b3b" stroke-width="1.6"/><path d="M15 1v6h6" fill="#fde2e2" stroke="#e23b3b" stroke-width="1.6" stroke-linejoin="round"/><rect x="0" y="13" width="19" height="9" rx="2" fill="#e23b3b"/><text x="9.5" y="20.2" font-size="6.6" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">PDF</text></svg>';
   const PRN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2M6 14h12v7H6z"/></svg>';
   const X = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  const DL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 17v3h16v-3"/></svg>';   // V150
   v.innerHTML = '<div class="pb"><span class="pn">' + PDF + '<b></b><small>kitap sayfası</small></span>' +
     '<div class="vs ck"><button type="button" data-k="c" class="on">Renkli</button><button type="button" data-k="sb">Siyah-beyaz</button></div>' +
-    '<div class="vs"><button type="button" class="pr on">' + PRN + 'Yazdır</button><button type="button" class="cl">' + X + 'Kapat</button></div></div>' +
-    '<div class="pg"><img alt=""></div>';
+    '<div class="vs"><button type="button" class="pr on">' + PRN + 'Yazdır</button><button type="button" class="dl on">' + DL + 'İndir</button><button type="button" class="cl">' + X + 'Kapat</button></div></div>' +
+    '<div class="pg"><div class="pi"><img alt=""></div></div>';
   document.body.append(v);
-  const img = v.querySelector('img'), ck = v.querySelector('.ck'), pgEl = v.querySelector('.pg'); let pg = [{}], k0 = 'c';
+  const img = v.querySelector('img'), ck = v.querySelector('.ck'), pgEl = v.querySelector('.pg'), dl = v.querySelector('.dl'); let pg = [{}], k0 = 'c';
   // V104 - a book (footer Kitap 1/2/3) is a stack of its pieces' pages in this same window; Renkli / Siyah-beyaz and Yazdır cover every page
-  const ims = () => pgEl.querySelectorAll('img');
+  const ims = () => pgEl.querySelectorAll('.pi img'), wraps = () => pgEl.querySelectorAll('.pi');   // V150 - each page sits in a .pi box with its hotspots
   const pick = k => { k0 = k; ck.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.k === k));
     ims().forEach((m, i) => { const p = pg[i] || {}; if (p.c) m.src = k === 'sb' && p.sb ? p.sb : p.c; }); };
   ck.querySelectorAll('button').forEach(b => b.onclick = () => pick(b.dataset.k));
@@ -122,15 +123,48 @@
   const fr = document.createElement('iframe'); fr.allow = 'fullscreen'; fr.hidden = true; pgEl.append(fr);
   let book = null;
   const kind = t => v.querySelector('.pn small').textContent = t;
-  const fill = (pages, name) => { ims().forEach((m, i) => i && m.remove()); pg = pages;
-    pages.slice(1).forEach(() => { const m = document.createElement('img'); m.alt = name; m.decoding = 'async'; fr.before(m); });
-    img.alt = name; ims().forEach(m => m.hidden = false); fr.hidden = true; book = null;
-    v.querySelector('.pn b').textContent = name; ck.hidden = !pages.some(p => p.sb); pick('c'); pgEl.scrollTop = 0; v.hidden = false; };
-  window.openPage = (src, name, bw, src2, bw2) => { kind('kitap sayfası'); fill([{ c: src, sb: bw }].concat(src2 ? [{ c: src2, sb: bw2 }] : []), name); };  // V109 - a 2-page song opens both
-  window.openBook = (pages, name, id) => { if (pages.length) { kind('kitap'); return fill(pages, name); }
-    book = id; ims().forEach(m => m.hidden = true); fr.hidden = false; ck.hidden = true; kind('kitap');
+  // V150 - İndir and the page's own Geri / İçindekiler / İleri buttons (public/pdfnav.js, page numbers of Tüm Kitap)
+  const NV = () => window.PDFNAV || { books: {}, pieces: [], page: {}, hs: {} };
+  let at = null;   // what is shown: f = PDF file, d = download name, p0 = book page of the first image, hs(i) = rects of image i, b / pc = book key / piece
+  const aBook = (key, ok) => { const B = NV().books[key]; return B && { f: B.f, d: B.d, p0: B.p0, b: key, hs: i => ok ? (NV().hs[key] || [])[i] : null }; };
+  const aPiece = (pc, ok) => { const B = NV().books[pc.k]; return { f: pc.f, d: pc.d, p0: pc.p0, pc, hs: i => ok && B ? (NV().hs[pc.k] || [])[pc.p0 - B.p0 + i] : null }; };
+  const bookImgs = key => { const B = (window.BOOKS || {})[key]; if (!B) return [];
+    const dir = 'notes/' + (/^Kısa Sap /.test(key) ? 'kisa-' : '') + 'kitap-' + (/Tüm Kitap$/.test(key) ? 'tum' : key.replace(/\D/g, ''));
+    return Array.from({ length: B.n }, (_, i) => { const s = dir + '/sayfa-' + String(i + 1).padStart(2, '0'); return { c: s + '.jpg?v=' + B.v, sb: s + '-sb.jpg?v=' + B.v, a4: 1 }; }); };
+  const last = () => (NV().books['Tüm Kitap'] || {}).n || 0;
+  const tgt = (i, h) => { if (!at) return null; const n = at.p0 + i, t = h === 1 ? 2 : n + (h ? 1 : -1); return h === 1 && n === 2 || t < 1 || t > last() ? null : t; };
+  const scrollTo = i => requestAnimationFrame(() => { const w = wraps()[i]; if (w) pgEl.scrollTop += w.getBoundingClientRect().top - pgEl.getBoundingClientRect().top - 16; });
+  const fill = (pages, name, a, to) => { wraps().forEach((m, i) => i && m.remove()); pg = pages; at = a || null;
+    pages.slice(1).forEach(() => { const w = document.createElement('div'), m = document.createElement('img'); w.className = 'pi'; m.alt = name; m.decoding = 'async'; w.append(m); fr.before(w); });
+    img.alt = name; wraps().forEach(m => m.hidden = false); fr.hidden = true; book = null;
+    wraps().forEach((w, i) => { w.querySelectorAll('.hs').forEach(h => h.remove()); const m = w.querySelector('img');
+      if (pages[i].a4) { m.width = 595; m.height = 842; } else { m.removeAttribute('width'); m.removeAttribute('height'); }   // book pages: room kept before they load, so a jump lands
+      ((at && at.hs(i)) || []).forEach((r, h) => { if (!r || tgt(i, h) == null) return;
+        const e = document.createElement('a'); e.className = 'hs'; e.href = '#'; e.dataset.i = i; e.dataset.h = h; e.title = ['Geri', 'İçindekiler', 'İleri'][h]; e.setAttribute('aria-label', e.title);
+        e.style.cssText = 'left:' + r[0] * 100 + '%;top:' + r[1] * 100 + '%;width:' + (r[2] - r[0]) * 100 + '%;height:' + (r[3] - r[1]) * 100 + '%'; w.append(e); }); });
+    dl.hidden = !(at && at.f);
+    v.querySelector('.pn b').textContent = name; ck.hidden = !pages.some(p => p.sb); pick(to == null ? 'c' : k0); pgEl.scrollTop = 0; v.hidden = false; if (to > 0) scrollTo(to); };
+  const openKey = (key, t) => { const B = NV().books[key], p = bookImgs(key); if (!B || p.length !== B.n) return; kind('kitap'); fill(p, key, aBook(key, 1), t - B.p0); };
+  const openPiece = (pc, t) => { const B = NV().books[pc.k], p = bookImgs(pc.k).slice(pc.p0 - B.p0, pc.p0 - B.p0 + pc.n); if (p.length !== pc.n) return;
+    kind('kitap sayfası'); fill(p, pc.t.replace(/\s+/g, ' '), aPiece(pc, 1), t - pc.p0); };
+  // Geri / İleri: the neighbouring image of this stack; past its ends the neighbouring piece (for a piece) or book (for a book), front pages from Tüm Kitap
+  // İçindekiler: Tüm Kitap page 2
+  const go = (i, h) => { const t = tgt(i, h); if (t == null) return;
+    if (h !== 1 && t >= at.p0 && t < at.p0 + pg.length) return scrollTo(t - at.p0);
+    if (h === 1) return openKey('Tüm Kitap', t);
+    const B = NV().books, pc = at.pc && NV().pieces.find(x => t >= x.p0 && t < x.p0 + x.n);
+    if (pc) return openPiece(pc, t);
+    openKey(Object.keys(B).find(k => k !== 'Tüm Kitap' && !at.pc && t >= B[k].p0 && t < B[k].p0 + B[k].n) || 'Tüm Kitap', t); };
+  pgEl.addEventListener('click', e => { const h = e.target.closest('.hs'); if (!h) return; e.preventDefault(); e.stopPropagation(); go(+h.dataset.i, +h.dataset.h); });
+  window.openPage = (src, name, bw, src2, bw2) => { kind('kitap sayfası'); const P = [{ c: src, sb: bw }].concat(src2 ? [{ c: src2, sb: bw2 }] : []),   // V109 - a 2-page song opens both
+    pc = NV().pieces[NV().page[((src || '').match(/notes\/([^/]+)\//) || [])[1]]]; fill(P, name, pc && aPiece(pc, P.length === pc.n)); };
+  window.openBook = (pages, name, id, key) => { if (pages.length) { kind('kitap'); const B = NV().books[key]; return fill(pages, name, B && aBook(key, pages.length === B.n)); }
+    book = id; wraps().forEach(m => m.hidden = true); fr.hidden = false; ck.hidden = true; kind('kitap'); dl.hidden = false; at = null;
     if (fr.dataset.id !== id) { fr.src = 'https://drive.google.com/file/d/' + id + '/preview'; fr.dataset.id = id; }
     v.querySelector('.pn b').textContent = name; v.hidden = false; };
+  // V150 - İndir: the PDF of what is shown (Kitap N.pdf, Tüm Kitap.pdf or the piece's own PDF), from public/pdf/
+  dl.onclick = () => { if (book) return window.open('https://drive.google.com/uc?export=download&id=' + book, '_blank', 'noopener');
+    if (!at || !at.f) return; const a = document.createElement('a'); a.href = at.f; a.download = at.d; document.body.append(a); a.click(); a.remove(); };
   v.querySelector('.cl').onclick = close;
   // a book prints from its own PDF tab (a Drive frame cannot be printed from here)
   v.querySelector('.pr').onclick = () => { if (book) return window.open('https://drive.google.com/file/d/' + book + '/view', '_blank', 'noopener');
