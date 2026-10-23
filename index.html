@@ -586,6 +586,7 @@
 <script src="lyrics.js?v=147"></script>
 <script src="notes.js?v=161"></script>
 <script src="kisa.js?v=162"></script>
+<script src="kisa-img.js?v=164"></script>
 <script src="tools.js?v=162"></script>
 <script src="books.js?v=162"></script>
 <script src="pdfnav.js?v=162"></script>
@@ -658,12 +659,14 @@ function idle(){
 function notes(name, msg, key){
   $('nt').textContent = name;
   const S = N[key] || N[name];   // V46 - key = "<book> <title>" when the same title is in two books
+  // V164 - Kısa Sap: the 15 pieces whose short-neck fingers differ show their own images (notes/<dir>/kisa/)
+  const KI = S && /K[ıi]sa/.test(D.groups[g].name) && (window.KISA_IMG || {})[Object.keys(N).find(n => N[n] === S)], SD = S ? S.dir + (KI ? 'kisa/' : '') : '', kp = f => KI && f ? f.replace(/\/(sayfa[^/]*)$/, '/kisa/$1') : f;
   // V32 - the song title becomes a button that opens the book's full page (with Yazdır) when the page exists
   if (S && S.page) { $('nt').innerHTML = '<button type="button" class="pdfb"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M3 1h12l6 6v19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" fill="#fff" stroke="#e23b3b" stroke-width="1.6"/><path d="M15 1v6h6" fill="#fde2e2" stroke="#e23b3b" stroke-width="1.6" stroke-linejoin="round"/><rect x="0" y="13" width="19" height="9" rx="2" fill="#e23b3b"/><text x="9.5" y="20.2" font-size="6.6" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">PDF</text></svg>' + esc(name) + '</button>';
-    $('nt').firstChild.onclick = () => window.openPage && openPage(S.page, name, S.pageBW, S.page2, S.pageBW2); }
+    $('nt').firstChild.onclick = () => window.openPage && openPage(kp(S.page), name, kp(S.pageBW), kp(S.page2), kp(S.pageBW2)); }
   if (!S) { $('sheet').innerHTML = '<div class="ph">' + msg + '</div>'; sap(); return; }
   // V25 - one group (A, B, C ...) at a time; the letters on the right turn the page
-  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + S.dir + k + '.png?v=144" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
+  $('sheet').innerHTML = '<div class="grp-view">' + S.groups.map(k => '<img class="nota" data-k="' + k + '" src="' + SD + k + '.png?v=144" alt="' + esc(name) + ' ' + k + '" hidden>').join('') + '</div>' +
     '<div class="grp-nav">' + S.groups.map(k => '<button data-k="' + k + '">' + k + '</button>').join('') + '</div>';
   const go = k => { $('sheet').querySelectorAll('[data-k]').forEach(e => e.tagName === 'IMG' ? e.hidden = e.dataset.k !== k : e.classList.toggle('on', e.dataset.k === k)); sap(S, k);
     // V40 - many groups: the list starts at the top (A) and slides down with the active letter
