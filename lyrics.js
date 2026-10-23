@@ -577,13 +577,17 @@ Pencereden yar bakar (mini mini güzel gel bize)
 Adnan Gül · Malatya`,
 // V144 - K01 #09
 "Giderim Bu Düzünen": `Giderim bu düzünen
-(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+(Allanma sallanma kokulu gelin,
+aynası cebine sokulu gelin)
 Aram yoktur kızınan
-(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+(Allanma sallanma kokulu gelin,
+aynası cebine sokulu gelin)
 İşte örtülü gülü
-(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+(Allanma sallanma kokulu gelin,
+aynası cebine sokulu gelin)
 Ne hoş olur sünbülü
-(Allanma sallanma kokulu gelin, aynası cebine sokulu gelin)
+(Allanma sallanma kokulu gelin,
+aynası cebine sokulu gelin)
 
 Selahattin Yetimoğlu · Erzurum-Şenkaya`,
 // V144 - K01 #10
@@ -706,20 +710,24 @@ Türkan Ebcioğlu · Edirne-Lüleburgaz`,
 "Suda Balık Yan Gider": `Suda balık yan gider
 (Yandım amman amman amman)
 Açma yaram kan gider
-(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+(Yaralıyam bana değme,
+baygınam gel gönlüm eğle)
 Buna tabip neylesin
 (Yandım amman amman amman)
 Ecel gelmiş can gider
-(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+(Yaralıyam bana değme,
+baygınam gel gönlüm eğle)
 
 Su başı duman oldu
 (Yandım amman amman amman)
 Hallerim yaman oldu
-(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+(Yaralıyam bana değme,
+baygınam gel gönlüm eğle)
 Bana dert açan güzel
 (Yandım amman amman amman)
 Ellere derman oldu
-(Yaralıyam bana değme, baygınam gel gönlüm eğle)
+(Yaralıyam bana değme,
+baygınam gel gönlüm eğle)
 
 Hayriye Temizkalp · Erzurum`,
 // V144 - K01 #20
