@@ -793,4 +793,28 @@ Aman kızı, çaçan kızı
 Sen allar giy ben kırmızı
 Çıkalım dağların başına
 Sen gül topla ben nergizi`,
+// V147 - K01 #16
+"Ela Gözlü Nazlı Yarim": `Derdin nedir bana anlat
+Ben kimlere edem minnet
+Dediler ki bağın cennet
+Girem dedim giremedim
+
+Bağlantı...
+Şahinim yok çıkam ava
+Ne yaptımsa aldım hava
+Kuşlar gibi ben bir yuva
+Kuram dedim kuramadım
+
+Şeker kaymak tatlı dilin
+Kınalamış nazik elin
+Bağındaki gonca gülün
+Derem dedim deremedim
+
+Bağlantı...
+Mehmet Ali esas adım
+Ferrahi'yi pirle kodum
+Gurbet elden gelmem dedim
+Duram dedim duramadım
+
+Aşık Ferrahi · Adana-Ceyhan`,
 };
