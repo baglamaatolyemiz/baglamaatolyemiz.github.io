@@ -847,7 +847,7 @@ function renderList(){
   $('mods').innerHTML = html || '<div class="empty">Sonuç yok</div>';
 }
 
-$('grp').onclick = $('gsw').onclick = e => { const b = e.target.closest('button'); if (!b) return; g = +b.dataset.g; open.clear(); open.add(0); renderList(); if (!cur || cur.g !== g) { const L = D.groups[g].levels[0]; if (L && L.items.length) play({ ...L.items[0], li: 0, ii: 0 }); else idle(); } else navState(); };   // V150 - book 1's first piece
+$('grp').onclick = $('gsw').onclick = e => { const b = e.target.closest('button'); if (!b) return; g = +b.dataset.g; open.clear(); open.add(0); renderList(); bookRow(); if (!cur || cur.g !== g) { const L = D.groups[g].levels[0]; if (L && L.items.length) play({ ...L.items[0], li: 0, ii: 0 }); else idle(); } else navState(); };   // V150 - book 1's first piece
 $('mods').onclick = e => {
   const r = e.target.closest('button.row');
   if (r) { const li = +r.dataset.li, ii = +r.dataset.ii; play({ ...D.groups[g].levels[li].items[ii], li, ii }); return; }
@@ -869,8 +869,11 @@ const pdfChip = (key, label) => '<em class="pdfk" data-b="' + esc(key) + '">' + 
 const bookGrp = (lab, pre, ks, tum) => '<span class="bkg"><span class="bkl">' + lab + '</span><span class="bkt">' + (tum ? pdfChip(pre + 'Tüm Kitap', 'Tüm Kitap') : '') +
   '<span class="bkp">' + ks.map(k => pdfChip(pre + k, k)).join('') + '</span></span></span>';
 const kisaKs = Object.keys(window.BOOKS || {}).filter(k => /^Kısa Sap Kitap \d+$/.test(k)).map(k => k.slice(9)).sort((a, b) => a.replace(/\D/g, '') - b.replace(/\D/g, ''));
-if (qm && qm[2].trim()) $('qk').innerHTML = bookGrp('Uzun Sap', '', qm[2].trim().split(/\s+/).map(k => k.replace(/^K0*(\d+)$/, 'Kitap $1')), 1) +  // V148 - the whole book (Kapak/00. Tüm Kitap.pdf)
-  (kisaKs.length || (window.BOOKS || {})['Kısa Sap Tüm Kitap'] ? bookGrp('Kısa Sap', 'Kısa Sap ', kisaKs, (window.BOOKS || {})['Kısa Sap Tüm Kitap']) : '');
+// V163 - only the neck chosen at the top: Uzun Sap shows its own books, Kısa Sap puts its books in the same place
+function bookRow() { if (!(qm && qm[2].trim())) return;
+  $('qk').innerHTML = /K[ıi]sa/.test(D.groups[g].name) && (kisaKs.length || (window.BOOKS || {})['Kısa Sap Tüm Kitap']) ? bookGrp('Kısa Sap', 'Kısa Sap ', kisaKs, (window.BOOKS || {})['Kısa Sap Tüm Kitap']) :
+    bookGrp('Uzun Sap', '', qm[2].trim().split(/\s+/).map(k => k.replace(/^K0*(\d+)$/, 'Kitap $1')), 1); }  // V148 - the whole book (Kapak/00. Tüm Kitap.pdf)
+bookRow();
 // V113 - the quote is plain text, a click does nothing (it used to open the book PDF in the video)
 if (Q) $('quote').innerHTML = '<div class="q" style="cursor:default">' + qh + '</div>';
 // V104 - Kitap N = the pages of level K0N in list order (the current Uzun/Kısa Sap group), each page once
