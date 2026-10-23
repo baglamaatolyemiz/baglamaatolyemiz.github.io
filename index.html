@@ -569,9 +569,9 @@
 <script src="data.js?v=49"></script>
 <script src="media.js"></script>
 <script src="lyrics.js?v=147"></script>
-<script src="notes.js?v=147"></script>
+<script src="notes.js?v=148"></script>
 <script src="tools.js?v=109"></script>
-<script src="books.js?v=136"></script>
+<script src="books.js?v=148"></script>
 <script>
 const D = window.DATA;
 let g = 0, cur = null, q = '';
@@ -825,7 +825,7 @@ const qh = qm ? '<span class="qt">' + esc(qm[1].trim()) + '</span>' : '';
 // V85 - K01-K03 sit in the right footer card; a click still plays the quote video
 // V93 - K01 -> "Kitap 1" with the PDF icon
 const pdfIco = '<svg viewBox="0 0 24 28" aria-hidden="true"><path d="M3 1h12l6 6v19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" fill="#fff" stroke="#e23b3b" stroke-width="1.6"/><path d="M15 1v6h6" fill="#fde2e2" stroke="#e23b3b" stroke-width="1.6" stroke-linejoin="round"/><rect x="0" y="13" width="19" height="9" rx="2" fill="#e23b3b"/><text x="9.5" y="20.2" font-size="6.6" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">PDF</text></svg>';
-if (qm && qm[2].trim()) $('qk').innerHTML = qm[2].trim().split(/\s+/).map(k => '<em class="pdfk">' + pdfIco + esc(k.replace(/^K0*(\d+)$/, 'Kitap $1')) + '</em>').join('');
+if (qm && qm[2].trim()) $('qk').innerHTML = qm[2].trim().split(/\s+/).map(k => '<em class="pdfk">' + pdfIco + esc(k.replace(/^K0*(\d+)$/, 'Kitap $1')) + '</em>').join('') + '<em class="pdfk">' + pdfIco + 'Tüm Kitap</em>';  // V148 - the whole book (Kapak/00. Tüm Kitap.pdf)
 // V113 - the quote is plain text, a click does nothing (it used to open the book PDF in the video)
 if (Q) $('quote').innerHTML = '<div class="q" style="cursor:default">' + qh + '</div>';
 // V104 - Kitap N = the pages of level K0N in list order (the current Uzun/Kısa Sap group), each page once
@@ -834,7 +834,7 @@ const bookPages = nm => { const L = D.groups[g].levels.find(l => l.name === 'K' 
 // V103 - Kitap 1/2/3 open the book in the kitap sayfası window, not in the video
 // V112 - a book with no piece pages yet shows the scanned book (34 pages) in the same view, not the Drive frame
 // V123 - a book listed in books.js opens the pages of its merged PDF (notes/kitap-N/), in its order
-const pdfPages = (nm, B) => Array.from({ length: B.n }, (_, i) => { const s = 'notes/kitap-' + nm.replace(/\D/g, '') + '/sayfa-' + String(i + 1).padStart(2, '0'); return { c: s + '.jpg?v=' + B.v, sb: s + '-sb.jpg?v=' + B.v }; });
+const pdfPages = (nm, B) => Array.from({ length: B.n }, (_, i) => { const s = 'notes/kitap-' + (nm === 'Tüm Kitap' ? 'tum' : nm.replace(/\D/g, '')) + '/sayfa-' + String(i + 1).padStart(2, '0'); return { c: s + '.jpg?v=' + B.v, sb: s + '-sb.jpg?v=' + B.v }; });
 const scanPages = Array.from({ length: 34 }, (_, i) => { const s = 'notes/kitap-tarama/sayfa-' + String(i + 1).padStart(2, '0') + '.jpg'; return { c: s, sb: s }; });
 if (Q && Q.id) { $('qk').onclick = e => { const k = e.target.closest('.pdfk'); if (k) { const nm = k.lastChild.textContent, B = (window.BOOKS || {})[nm], p = B ? pdfPages(nm, B) : bookPages(nm); openBook(p.length ? p : scanPages, k.lastChild.textContent, Q.id); } }; $('qk').title = 'Kitabı aç'; $('qk').style.cursor = 'pointer'; }
 renderList();
