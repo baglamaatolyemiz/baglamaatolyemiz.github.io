@@ -150,11 +150,13 @@
   .qk{flex-wrap:wrap;align-items:center}
   .qk .bkg{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
   .qk .bkl{font-size:9.5pt;color:#1f2a44;white-space:nowrap}
-  .qk .bkt{display:inline-flex;align-items:center;gap:2px;border:1px solid #f3c4c4;background:#fff;border-radius:8px;padding:2px;box-shadow:0 2px 6px rgba(226,59,59,.12)}
-  .qk .bkt>em.pdfk{border-color:transparent;box-shadow:none;padding:0 8px 0 4px}
-  .qk .bkp{display:inline-flex;align-items:center;gap:2px;padding:2px;border-radius:6px;background:#fff4f4}
-  .qk .bkp em.pdfk{font-size:8.5pt;gap:4px;padding:0 7px 0 4px;line-height:16px;border-radius:6px;box-shadow:none}
-  .qk .bkp em.pdfk svg{width:11px;height:13px}
+  .qk .bkt{display:inline-flex;align-items:center;gap:4px;border:1px solid #f3c4c4;background:#fff6f6;border-radius:9px;padding:3px;box-shadow:0 2px 6px rgba(226,59,59,.12)}
+  /* V152 - Tüm Kitap = the main button (solid red), Kitap 1/2/3 = white part buttons inside its tray */
+  .qk .bkt>em.pdfk{color:#fff;background:linear-gradient(180deg,#e94848,#cf2626);border-color:#b81d1d;border-radius:7px;padding:2px 10px 2px 5px;line-height:18px;box-shadow:0 2px 5px rgba(184,29,29,.35)}
+  .qk .bkt>em.pdfk:hover{background:linear-gradient(180deg,#d93636,#b81d1d);border-color:#9e1515}
+  .qk .bkp{display:inline-flex;align-items:center;gap:4px;padding:0 2px 0 4px;border-left:1px solid #f0b8b8;margin-left:2px}
+  .qk .bkp em.pdfk{font-size:9pt;gap:4px;padding:1px 8px 1px 4px;line-height:16px;border-radius:6px;border-color:#f0b8b8;background:#fff;box-shadow:0 1px 3px rgba(226,59,59,.15)}
+  .qk .bkp em.pdfk svg{width:12px;height:14px}
   footer .fe{display:flex;gap:6px;align-items:center} footer .credit .lb{color:#1f2a44} footer .credit a{color:#0141ee;text-decoration:underline;text-underline-offset:2px} footer .credit a:hover{color:#0b1440} /* V95 - mail link classic blue */
   /* V93 - credit in the same pill as the book buttons, no icon */
   footer .credit{font-size:9.5pt;color:#b31616;border:1px solid #f3c4c4;background:#fff;border-radius:8px;padding:2px 10px;line-height:18px;box-shadow:0 2px 6px rgba(226,59,59,.12)}
