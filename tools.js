@@ -133,6 +133,7 @@
     return Array.from({ length: B.n }, (_, i) => { const s = dir + '/sayfa-' + String(i + 1).padStart(2, '0'); return { c: s + '.jpg?v=' + B.v, sb: s + '-sb.jpg?v=' + B.v, a4: 1 }; }); };
   const last = () => (NV().books['Tüm Kitap'] || {}).n || 0;
   const tgt = (i, h) => { if (!at) return null; const n = at.p0 + i, t = h === 1 ? 2 : n + (h ? 1 : -1); return h === 1 && n === 2 || t < 1 || t > last() ? null : t; };
+  const toc = i => { const T = at && at.b && (NV().toc || {})[at.b]; return T && at.p0 + i === 2 && at.hs(i) ? T : []; };   // V165 - rows of the İçindekiler page (Tüm Kitap / Kısa Sap Tüm Kitap page 2): [x0,y0,x1,y1,target page]
   const scrollTo = i => requestAnimationFrame(() => { const w = wraps()[i]; if (w) pgEl.scrollTop += w.getBoundingClientRect().top - pgEl.getBoundingClientRect().top - 16; });
   const fill = (pages, name, a, to) => { wraps().forEach((m, i) => i && m.remove()); pg = pages; at = a || null;
     pages.slice(1).forEach(() => { const w = document.createElement('div'), m = document.createElement('img'); w.className = 'pi'; m.alt = name; m.decoding = 'async'; w.append(m); fr.before(w); });
@@ -141,6 +142,8 @@
       if (pages[i].a4) { m.width = 595; m.height = 842; } else { m.removeAttribute('width'); m.removeAttribute('height'); }   // book pages: room kept before they load, so a jump lands
       ((at && at.hs(i)) || []).forEach((r, h) => { if (!r || tgt(i, h) == null) return;
         const e = document.createElement('a'); e.className = 'hs'; e.href = '#'; e.dataset.i = i; e.dataset.h = h; e.title = ['Geri', 'İçindekiler', 'İleri'][h]; e.setAttribute('aria-label', e.title);
+        e.style.cssText = 'left:' + r[0] * 100 + '%;top:' + r[1] * 100 + '%;width:' + (r[2] - r[0]) * 100 + '%;height:' + (r[3] - r[1]) * 100 + '%'; w.append(e); });
+      toc(i).forEach(r => { const e = document.createElement('a'); e.className = 'hs'; e.href = '#'; e.dataset.i = i; e.dataset.t = r[4]; e.setAttribute('aria-label', 'Sayfa ' + r[4]);   // V165 - every row of the İçindekiler page jumps to its piece's page
         e.style.cssText = 'left:' + r[0] * 100 + '%;top:' + r[1] * 100 + '%;width:' + (r[2] - r[0]) * 100 + '%;height:' + (r[3] - r[1]) * 100 + '%'; w.append(e); }); });
     dl.hidden = !(at && at.f);
     v.querySelector('.pn b').textContent = name; ck.hidden = !pages.some(p => p.sb); pick(to == null ? 'c' : k0); pgEl.scrollTop = 0; v.hidden = false; if (to > 0) scrollTo(to); };
@@ -156,7 +159,7 @@
     const B = NV().books, pc = at.pc && NV().pieces.find(x => t >= x.p0 && t < x.p0 + x.n);
     if (pc) return openPiece(pc, t);
     openKey(Object.keys(B).find(k => k.replace(/Kitap \d+$/, '') === pre && !at.pc && t >= B[k].p0 && t < B[k].p0 + B[k].n) || pre + 'Tüm Kitap', t); };
-  pgEl.addEventListener('click', e => { const h = e.target.closest('.hs'); if (!h) return; e.preventDefault(); e.stopPropagation(); go(+h.dataset.i, +h.dataset.h); });
+  pgEl.addEventListener('click', e => { const h = e.target.closest('.hs'); if (!h) return; e.preventDefault(); e.stopPropagation(); if (h.dataset.t) { const t = +h.dataset.t; if (t >= at.p0 && t < at.p0 + pg.length) scrollTo(t - at.p0); return; } go(+h.dataset.i, +h.dataset.h); });
   window.openPage = (src, name, bw, src2, bw2) => { kind('kitap sayfası'); const P = [{ c: src, sb: bw }].concat(src2 ? [{ c: src2, sb: bw2 }] : []),   // V109 - a 2-page song opens both
     pc = NV().pieces[NV().page[((src || '').match(/notes\/([^/]+)\//) || [])[1]]]; fill(P, name, pc && aPiece(pc, P.length === pc.n)); };
   window.openBook = (pages, name, id, key) => { if (pages.length) { kind('kitap'); const B = NV().books[key]; return fill(pages, name, B && aBook(key, pages.length === B.n)); }
