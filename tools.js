@@ -127,7 +127,7 @@
   const NV = () => window.PDFNAV || { books: {}, pieces: [], page: {}, hs: {} };
   let at = null;   // what is shown: f = PDF file, d = download name, p0 = book page of the first image, hs(i) = rects of image i, b / pc = book key / piece
   const aBook = (key, ok) => { const B = NV().books[key]; return B && { f: B.f, d: B.d, p0: B.p0, b: key, hs: i => ok ? (NV().hs[key] || [])[i] : null }; };
-  const aPiece = (pc, ok) => { const B = NV().books[pc.k]; return { f: pc.f, d: pc.d, p0: pc.p0, pc, hs: i => ok && B ? (NV().hs[pc.k] || [])[pc.p0 - B.p0 + i] : null }; };
+  const aPiece = (pc, ok, ks) => { const B = NV().books[pc.k]; return { f: ks && pc.kf ? pc.kf : pc.f, d: ks && pc.kd ? pc.kd : pc.d, p0: pc.p0, pc, ks, hs: i => ok && B ? (NV().hs[(ks ? 'Kısa Sap ' : '') + pc.k] || [])[pc.p0 - B.p0 + i] : null }; };   // V167 - ks: the Kısa Sap edition of the piece (its own PDF, own page images, own buttons)
   const bookImgs = key => { const B = (window.BOOKS || {})[key]; if (!B) return [];
     const dir = 'notes/' + (/^Kısa Sap /.test(key) ? 'kisa-' : '') + 'kitap-' + (/Tüm Kitap$/.test(key) ? 'tum' : key.replace(/\D/g, ''));
     return Array.from({ length: B.n }, (_, i) => { const s = dir + '/sayfa-' + String(i + 1).padStart(2, '0'); return { c: s + '.jpg?v=' + B.v, sb: s + '-sb.jpg?v=' + B.v, a4: 1 }; }); };
@@ -148,20 +148,20 @@
     dl.hidden = !(at && at.f);
     v.querySelector('.pn b').textContent = name; ck.hidden = !pages.some(p => p.sb); pick(to == null ? 'c' : k0); pgEl.scrollTop = 0; v.hidden = false; if (to > 0) scrollTo(to); };
   const openKey = (key, t) => { const B = NV().books[key], p = bookImgs(key); if (!B || p.length !== B.n) return; kind('kitap'); fill(p, key, aBook(key, 1), t - B.p0); };
-  const openPiece = (pc, t) => { const B = NV().books[pc.k], p = bookImgs(pc.k).slice(pc.p0 - B.p0, pc.p0 - B.p0 + pc.n); if (p.length !== pc.n) return;
-    kind('kitap sayfası'); fill(p, pc.t.replace(/\s+/g, ' '), aPiece(pc, 1), t - pc.p0); };
+  const openPiece = (pc, t, ks) => { const B = NV().books[pc.k], p = bookImgs((ks ? 'Kısa Sap ' : '') + pc.k).slice(pc.p0 - B.p0, pc.p0 - B.p0 + pc.n); if (p.length !== pc.n) return;
+    kind('kitap sayfası'); fill(p, pc.t.replace(/\s+/g, ' '), aPiece(pc, 1, ks), t - pc.p0); };
   // Geri / İleri: the neighbouring image of this stack; past its ends the neighbouring piece (for a piece) or book (for a book), front pages from Tüm Kitap
   // İçindekiler: Tüm Kitap page 2
   const go = (i, h) => { const t = tgt(i, h); if (t == null) return;
     if (h !== 1 && t >= at.p0 && t < at.p0 + pg.length) return scrollTo(t - at.p0);
-    const pre = /^Kısa Sap /.test(at.b || '') ? 'Kısa Sap ' : '';   // V162 - a Kısa Sap book stays in its own edition
+    const pre = /^Kısa Sap /.test(at.b || '') || at.ks ? 'Kısa Sap ' : '';   // V162 - a Kısa Sap book stays in its own edition
     if (h === 1) return openKey(pre + 'Tüm Kitap', t);
     const B = NV().books, pc = at.pc && NV().pieces.find(x => t >= x.p0 && t < x.p0 + x.n);
-    if (pc) return openPiece(pc, t);
+    if (pc) return openPiece(pc, t, at.ks);
     openKey(Object.keys(B).find(k => k.replace(/Kitap \d+$/, '') === pre && !at.pc && t >= B[k].p0 && t < B[k].p0 + B[k].n) || pre + 'Tüm Kitap', t); };
   pgEl.addEventListener('click', e => { const h = e.target.closest('.hs'); if (!h) return; e.preventDefault(); e.stopPropagation(); if (h.dataset.t) { const t = +h.dataset.t; if (t >= at.p0 && t < at.p0 + pg.length) scrollTo(t - at.p0); return; } go(+h.dataset.i, +h.dataset.h); });
   window.openPage = (src, name, bw, src2, bw2) => { kind('kitap sayfası'); const P = [{ c: src, sb: bw }].concat(src2 ? [{ c: src2, sb: bw2 }] : []),   // V109 - a 2-page song opens both
-    pc = NV().pieces[NV().page[((src || '').match(/notes\/([^/]+)\//) || [])[1]]]; fill(P, name, pc && aPiece(pc, P.length === pc.n)); };
+    pc = NV().pieces[NV().page[((src || '').match(/notes\/([^/]+)\//) || [])[1]]]; fill(P, name, pc && aPiece(pc, P.length === pc.n, /\/kisa\//.test(src || ''))); };
   window.openBook = (pages, name, id, key) => { if (pages.length) { kind('kitap'); const B = NV().books[key]; return fill(pages, name, B && aBook(key, pages.length === B.n)); }
     book = id; wraps().forEach(m => m.hidden = true); fr.hidden = false; ck.hidden = true; kind('kitap'); dl.hidden = false; at = null;
     if (fr.dataset.id !== id) { fr.src = 'https://drive.google.com/file/d/' + id + '/preview'; fr.dataset.id = id; }
